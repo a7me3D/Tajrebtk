@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load account %}
+
+
+{% block extra_css %}
+    <style>
+        body {
+            background-image: url("{% static 'portal/White-Background.jpg' %}");
+        }
+    </style>
+    <link href="{% static 'css/portal.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block content %}
+    <div class="card" id="card">
+        <div class='signup-card' id="signup-card" style="display: none">
+            <div class="normalconnect" id='normalconnect' style="">
+                <h2 class="SignupHeader" style="padding-bottom: 0;"> انظم الينا </h2>
+                <hr style="margin-top:5%;width: 50%">
+                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    <div class="DivIn">
+                        {{ form.username }}
+                    </div>
+                    <div class="DivIn" style="padding: 0">
+                        <div class="row">
+                            <div class="col-md-4"> {{ form.last_name }} </div>
+                            <div class="col-md-4"> {{ form.first_name }} </div>
+                        </div>
+                    </div>
+                    <div class="DivIn">
+                        {{ form.email }}
+                    </div>
+                    <div class="DivIn">
+                        {{ form.password1 }}
+                    </div>
+                    <div class="DivIn">
+                        {{ form.password2 }}
+                    </div>
+                    <div class="DivIn" style="padding: 8%;position: relative;top: -10px;">
+                        <div class="checkbox">{{ form.rules }}</div>
+                        <div class="checkbox-label" id="checkbox-label"><h6>{{ form.rules.label }}</h6></div>
+                    </div>
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <button type="button" class="btn  signup-submit">تسجبل</button>
+                </form>
+            </div>
+        </div>
+        <div class="login-card">
+            <h2 class="LoginHeader">سجل دخولك</h2>
+            <hr>
+            <form class="login" id="login_form" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                <div class="socialconnect">
+                    {% load socialaccount %}
+                    {% providers_media_js %}
+
+                    <h5>عبر مواقع التواصل</h5>
+                    <ul>
+                        <li>
+                            <a class="btn fb-btn" href="{% provider_login_url "facebook" method="js_sdk" %}">
+                                <h6>acebook</h6>
+                            </a>
+                        </li>
+                        <li>
+                            <a  href="{% provider_login_url "google" method="js_sdk" %}" class="btn google-btn"><h6>oogle</h6></a>
+                        </li>
+                    </ul>
+                </div>
+                <h3 style="padding: 1% 0; text-align: center">أو</h3>
+                <div class="normalconnect">
+                    <h5> الطريقة التقليدية</h5>
+                    <div class="DivIn">
+                        {{ login_form.login }}
+                    </div>
+                    <div class="DivIn">
+                        {{ login_form.password }}
+                    </div>
+                    <div class="DivIn" style="padding-top:0">
+                        {{ login_form.remember }}<h6>{{ login_form.remember.label }}</h6>
+                    </div>
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <div class="col-md-12">
+                        <a class="pass-reset" href="{% url 'account_reset_password' %}">استرجاع كلمة السر</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 login-submit-div">
+                            <button class="btn regular-link login-submit" id="login-submit" type="button">دخول</button>
+                        </div>
+                        <div class="col-md-6 signup-display-div">
+                            <button class="btn regular-link signup-display" id="signup-display" type="button">حساب جديد
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    {% comment xhr %}{% endcomment %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(methode) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(methode));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+    </script>
+    {% comment animation and divers %}{% endcomment %}
+    <script>
+        $(".signup-display").on('click', function () {
+            $(".login-card").fadeOut(500, function () {
+                $('.signup-card').fadeIn(500)
+            });
+        })
+    </script>
+    {% comment login ajax %}{% endcomment %}
+    <script>
+        $('#login-submit').on('click', function (e) {
+            e.preventDefault()
+            $data = $('#login_form').serialize()
+            $.ajax({
+                type: "POST",
+                url: '{% url 'account_login' %}',
+                dataType: 'json',
+                data: {
+                    login: $('#id_login').val(),
+                    password: $('#id_password').val(),
+                    remember: $('#id_remember').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+
+                },
+                success: LoginRedirect,
+                error: LoginError,
+            });
+
+            function LoginRedirect() {
+                window.location.href = '{% url 'BlogPosts' %}'
+            }
+
+            function LoginError(data) {
+                id = {
+                    login: 'id_login',
+                    password: 'id_password',
+                };
+                if ($('.normalconnect').children('p').length > 0) {
+                    $('.normalconnect').children('p').remove()
+                }
+                for (i in id) {
+                    $input = $('#' + id[i]);
+                    if ($input.hasClass("InputErr")) {
+                        $input.next('p').remove();
+                        $input.removeClass("InputErr");
+                    }
+
+                }
+                if (data['responseJSON']["form"]["errors"][0]) {
+                    MatchErr = document.createElement('p');
+                    MatchErr.classList.add('ErrTxt');
+                    MatchErr.style.textAlign = 'center';
+                    MatchErr.innerText = data['responseJSON']["form"]["errors"][0]
+                    $('.DivIn')[6].before(MatchErr);
+
+                }
+                else {
+                    for (var field in data['responseJSON']["form"]["fields"]) {
+                        if (field != 'remember' && data['responseJSON']["form"]["fields"][field]['errors'][0]) {
+
+                            var $input = $("#id_" + field);
+                            if ($input.next('p').length) {
+                                $input.next('p').remove();
+                            }
+                            document.getElementById("id_" + field).classList.add('InputErr');
+                            $input.after("<p class='ErrTxt'>" + data['responseJSON']["form"]["fields"][field]['errors'][0] + "</p>");
+                        }
+                    }
+                }
+            }
+        })
+
+
+    </script>
+    {% comment signup ajax %}{% endcomment %}
+    <script>
+        $('.signup-submit').on('click', function (e) {
+            e.preventDefault()
+            $data = $('#signup_form').serialize()
+            $.ajax({
+                type: "POST",
+                url: '{% url "account_signup" %}',
+                data: $data,
+                success: SignupRedirect,
+                error: SignupError,
+            });
+
+            function SignupRedirect() {
+                window.location.href = '{% url 'BlogPosts' %}'
+            }
+
+            function SignupError(data, response) {
+                id = {
+                    username: 'id_username',
+                    first_name: 'id_first_name',
+                    last_name: 'id_last_name',
+                    email: 'id_email',
+                    password1: 'id_password',
+                    password2: 'id_password2',
+                    rules: 'id_rules',
+                };
+                if ($('#signup_form').children('p').length > 0) {
+                    $('#signup_form').children('p').remove()
+                }
+                for (i in id) {
+                    $input = $('#' + id[i]);
+                    if ($input.hasClass("InputErr")) {
+                        $input.next('p').remove();
+                        $input.removeClass("InputErr");
+                    }
+
+                }
+                if (data['responseJSON']["form"]["errors"].length > 0) {
+                    MatchErr = document.createElement('p');
+                    MatchErr.classList.add('ErrTxt');
+                    MatchErr.style.textAlign = 'center';
+                    MatchErr.innerText = data['responseJSON']["form"]["errors"][0]
+                    $('.DivIn')[0].before(MatchErr);
+                }
+                else {
+                    for (var field in data['responseJSON']["form"]["fields"]) {
+                        var $input = $("#id_" + field);
+                        if (field == 'rules') {
+                            $input = $("#checkbox-label")
+                        }
+                        if ($input.next('p').length) {
+                            $input.next('p').remove();
+                        }
+                        if (data['responseJSON']["form"]["fields"][field]['errors'][0]) {
+                            document.getElementById("id_" + field).classList.add('InputErr');
+                            $input.after("<p class='ErrTxt' style='display:none'>" + data['responseJSON']["form"]["fields"][field]['errors'][0] + "</p>")
+                        }
+                        $('.ErrTxt').fadeIn()
+                    }
+
+
+                }
+            }
+        })
+
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load static %}
+{% block body_class %} signup_body {% endblock %}
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+    <style>
+        .signup {
+            text-align: right;
+            display: block;
+            position: relative;
+            margin: auto;
+            width: 70%;
+            font-size: smaller;
+        }
+
+        .container {
+            top: 20vh;
+            position: relative;
+        }
+
+        .top-nav {
+            background-color: transparent;
+        }
+
+        .nav {
+            background-color: rgba(50, 85, 115, 0.65);
+        }
+
+        .signup_body {
+            background-color: rgb(226, 232, 241);
+        }
+
+        .textinput {
+            border: 0;
+            border-bottom: 1px solid;
+            border-radius: 0;
+            background-color: rgba(165, 154, 154, 0.25);
+        }
+
+        .form-control:focus {
+            border: 0 transparent;
+        }
+
+        .textinput:focus {
+            border-bottom: 1px solid blueviolet;
+            box-shadow: 0 0 white;
+        }
+
+        .textinput {
+            float: right;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        p > a {
+            color: darkred;
+        }
+
+        footer {
+            background-color: rgba(23, 19, 19, 0.32);
+            margin: 30px 0px 0 0;
+            width: 100%;
+        }
+
+    </style>
+    <div class="container">
+        <div class="signup">
+
+            <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}"
+                  style="font-family: Changa;">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <button type="submit" class="btn btn-primary" style="display: block;float: left;margin: auto;">تسجيل
+                    الحساب
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

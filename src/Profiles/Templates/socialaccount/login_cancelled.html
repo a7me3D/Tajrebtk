@@ -1,0 +1,18 @@
+{% extends "socialaccount/base.html" %}
+
+{% block head_title %}{% trans "Login Cancelled" %}{% endblock %}
+
+{% block content %}
+    <div class="container" style="position: relative;top: 35vh; text-align: center;padding: 0 15%;font-family: 'Changa">
+
+        <h3>لقد تم الغاء تسجيل الدخول</h3>
+
+        {% url 'portal' as login_url %}
+
+        <p style="margin-top: 3%">لقد قررت إلغاء تسجيل الدخول إلى موقعنا باستخدام أحد حساباتك الحالية. إذا كان هذا خطأ ،
+            يرجى المتابعة
+            <a style="color: crimson;" href="{{ login_url }}">تسجيل الدخول</a>
+        </p>
+
+    </div>
+{% endblock %}

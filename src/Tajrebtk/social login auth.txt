@@ -1,0 +1,5 @@
+
+facebook login auth : 
+
+id = 1967693643515993
+sk = a44c79269e60b763095cdcd3b9b08f16

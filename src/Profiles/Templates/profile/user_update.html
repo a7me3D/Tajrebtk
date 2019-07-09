@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load static %}
+{% load thumbnail %}
+{% block body_class %} UserProfileUpdate {% endblock %}
+{% block extra_css %}
+    <link href="{% static 'css/user_update.css' %}" rel="stylesheet" type="text/css"/>
+    <style>
+        footer {
+            margin: 0;
+            bottom: -42vw;
+        }
+
+            @media screen and (max-width: 767px) {
+                footer {
+                    bottom: -70vh;
+                }
+            }
+
+    </style>
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class="profile-card" style="">
+            <i id='avatar_input' class="fa fa-upload"></i>
+            <img src="{{ user.userprofile.avatar.url }}" height="100" width="100" class="img-rounded user-avatar"/>
+            <div class="container">
+                <form method="POST" class="padding" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ noddle_form }}
+                    {{ formset.0 }}
+                    {% for field in user_form %}
+                        {% if field.is_hidden %}
+                            {{ field }}
+                        {% else %}
+                            <div class="DivIn">
+                                <span class="label">{{ field.label }}</span>
+                                {{ field }}
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {{ management }}
+                    {% for field in formset|slice:"1:" %}
+                        {% if field.is_hidden %}
+                            {{ field }}
+                        {% else %}
+                            <div class="DivIn">
+                                <span class="label">{{ field.label }}</span>
+                                {{ field }}
+                                {{ field.error }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <h1 class="pass-change-link"><a href="{% url 'account_change_password' %}">يمكنك تغيير كلمة المرور
+                        من هنا</a></h1>
+                    <button type="submit" class="btn save-changes">
+                        حفظ
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block extra_js %}
+    <script>
+
+        $(".save-changes").click(function () {
+            $(".padding").submit()
+        })
+        $("#avatar_input").click(function () {
+            console.log('click');
+            $("#id_userprofile-0-avatar").click();
+        });
+    </script>
+
+    <script>
+        $('document').ready(function () {
+            $('.UserProfileUpdate').css('background-image', 'url({% static "ProfileCover/SunSet_Clouds.jpg" %}');
+
+        });
+        $('textarea').each(function () {
+            this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+        }).on('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    </script>
+
+{% endblock %}

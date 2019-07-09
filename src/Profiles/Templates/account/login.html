@@ -1,0 +1,479 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load account %}
+
+
+{% block extra_css %}
+    <style>
+        * {
+            font-family: Changa;
+            font-weight: initial;
+            direction: rtl;
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("{% static 'portal/White-Background.jpg' %}");
+            background-origin: padding-box;
+            background-size: auto;
+            background-repeat: no-repeat;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        input {
+            background-color: transparent;
+        }
+
+        .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+            outline: 0;
+            outline-offset: 0;
+        }
+
+        .card {
+            position: absolute;
+            width: 35%;
+            min-width: auto;
+            right: 35%;
+            top: 13%;
+            background-color: white;
+            box-shadow: -11px 0px 22px -6px #0000002b;
+            transition: ease-out 300ms;
+
+        }
+
+        .LoginHeader {
+            padding-bottom: 3%;
+            text-align: center;
+        }
+
+        .socialconnect > h5, .normalconnect > h5 {
+            text-align: center;
+            font-size: 10px;
+            color: #616161;
+        }
+
+        .socialconnect > ul > li > .btn {
+            display: block;
+            padding: 3% 20%;
+            margin: 5px auto;
+        }
+
+        .fb-btn, .fb-btn:active {
+            background: -moz-linear-gradient(0% 50% 0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+            background: -webkit-linear-gradient(0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+            background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0, rgba(21, 140, 255, 1)), color-stop(1, rgba(0, 40, 145, 1)));
+            background: -o-linear-gradient(0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+            background: -ms-linear-gradient(0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#158CFF', endColorstr='#002891' ,GradientType=0)";
+            background: linear-gradient(90deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+            opacity: 0.8;
+            border-radius: 15px;
+            -moz-border-radius: 15px;
+            -webkit-border-radius: 15px;
+            filter: alpha(opacity=80) progid:DXImageTransform.Microsoft.Alpha(opacity=80) progid:DXImageTransform.Microsoft.gradient(startColorstr='#158CFF', endColorstr='#002891', GradientType=1);
+
+        }
+
+        .google-btn, .google-btn:active {
+            background: -moz-linear-gradient(0% 50% 0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+            background: -webkit-linear-gradient(0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+            background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0, rgba(255, 42, 0, 1)), color-stop(1, rgba(255, 109, 6, 1)));
+            background: -o-linear-gradient(0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+            background: -ms-linear-gradient(0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF2A00', endColorstr='#FF6D06' ,GradientType=0)";
+            background: linear-gradient(90deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+            opacity: 0.8;
+            border-radius: 15px;
+            -moz-border-radius: 15px;
+            -webkit-border-radius: 15px;
+            filter: alpha(opacity=80) progid:DXImageTransform.Microsoft.Alpha(opacity=80) progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF2A00', endColorstr='#FF6D06', GradientType=1);
+        }
+
+        .DivIn {
+            padding: 2.5% 2%;
+        }
+
+        .card > .login-card > .login > .normalconnect .DivIn > input {
+            position: relative;
+            right: 25%;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #666666;
+            display: block;
+            width: 55%;
+            height: 50px;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid #e6e6e6;
+            padding: 0 30px 0 68px;
+            transition: ease 300ms;
+        }
+
+        input::placeholder {
+            font-size: small;
+            opacity: 1;
+        }
+
+        #id_remember {
+            width: initial;
+            height: 30px;
+        }
+
+        .DivIn > h6 {
+            margin: 0;
+            position: relative;
+            top: -22px;
+            right: 30%;
+        }
+
+        .login-submit, .login-submit:active, .login-submit:hover, .login-submit:focus {
+            color: white;
+            background: linear-gradient(90deg, rgb(8, 200, 93) 0%, rgba(120, 209, 109, 0.84) 100%);
+            border: none;
+            display: block;
+            padding: 5px 50px;
+            position: relative;
+            margin: auto;
+        }
+
+        .signup-display, .signup-display:active, .signup-display:hover {
+            padding: 5px 35px;
+            position: relative;
+            margin: auto;
+            display: block;
+            border: 1px solid #0000003d;
+            background-color: white;
+            color: #795548;
+        }
+
+        .signup-display > a, .signup-display > a:active, .signup-display > a:hover{
+            color: #000;
+            text-decoration: none;
+        }
+
+        .login-submit-div {
+            margin-bottom: 1%;
+            float: right
+        }
+
+        .login-submit-div, .signup-display-div {
+            top: 15px
+        }
+
+        .pass-reset {
+            color: black;
+            text-align: center;
+            margin: auto;
+            position: relative;
+            display: block;
+            font-size: smaller;
+            font-weight: 200;
+        }
+        h4 {
+            line-height: normal;
+            text-align: center;
+            font-size: inherit;
+            font-weight: 700;
+        }
+
+        .checkbox {
+            position: relative;
+            display: block;
+            left: -10%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-label {
+            right: 15%;
+            position: relative;
+            top: 5px;
+        }
+
+        .card > .login-card > .login > .normalconnect .DivIn > .InputErr {
+            border-bottom: 1px solid;
+            border-color: #E91E63;
+            height: 40px;
+        }
+
+        .ErrTxt {
+            position: relative;
+            margin: 2% 20% 0 0;
+            font-size: smaller;
+            font-weight: 500;
+            color: firebrick;
+        }
+
+        @media screen and (max-width: 991px) {
+
+            body {
+                direction: ltr
+            }
+
+            .col-md-6 {
+                margin: auto;
+                display: block;
+                position: relative;
+                width: 62%;
+            }
+
+            .card {
+                width: 83%;
+                right: 8%;
+                top: 20%;
+            }
+
+            .socialconnect > ul > li > .btn {
+                padding: 2% 15%;
+            }
+
+            .DivIn {
+                padding: 1% 2%;
+            }
+        }
+
+        @media screen and (max-width: 880px) {
+
+            body {
+                direction: ltr
+            }
+
+            .card {
+                width: 83%;
+                right: 8%;
+                top: 20%;
+            }
+
+            .signup-display {
+                padding: 1% 30%;
+            }
+
+            .card > .login-card > .login > .normalconnect .DivIn > input {
+                padding: 0;
+            }
+
+            .login-submit, .login-submit:hover, .login-submit:active, .login-submit:focus {
+                padding: 2% 30%;
+                bottom: 1%;
+                left: 0;
+                right: 0;
+
+            }
+
+            .login-submit-div {
+                margin-bottom: 1%;
+                float: initial;
+            }
+
+        }
+
+        @media screen and (max-width: 425px) {
+
+            body {
+                direction: ltr;
+            }
+
+            .card {
+                width: 83%;
+                right: 8%;
+                top: 15%;
+            }
+
+            .LoginHeader {
+                font-size: 20px
+            }
+
+            .DivIn {
+                padding: 0;
+            }
+
+            .DivIn > h6 {
+                right: 35%
+            }
+
+            .checkbox {
+                left: 0;
+            }
+
+            .checkbox > input {
+                width: 30%;
+                right: 10px;
+            }
+
+            .checkbox-label {
+                right: 25%;
+            }
+
+            .checkbox-label > h6 {
+                font-size: 10px;
+            }
+        }
+
+
+    </style>
+{% endblock %}
+{% block content %}
+    {% include 'snippet/navbar.html' %}
+    {#  {% if socialaccount.providers  %}#}
+    {#  <div class="socialaccount_ballot">#}
+    {#    <ul class="socialaccount_providers">#}
+    {#      {% include "socialaccount/snippets/provider_list.html" with process="login" %}#}
+    {#    </ul>#}
+    {#  {% include "socialaccount/snippets/login_extra.html" %}#}
+    {#  {% endif %}#}
+
+
+    <div class="card" id="card">
+        <div class="login-card">
+            <h2 class="LoginHeader">سجل دخولك</h2>
+            <form class="login" id="login_form" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                <div class="socialconnect">
+                    <h5>عبر مواقع التواصل</h5>
+                    <ul>
+                        <li>
+                            <button type="button" class="btn fb-btn"></button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn google-btn"></button>
+                        </li>
+                    </ul>
+                </div>
+                <h3 style="padding: 1% 0; text-align: center">أو</h3>
+                <div class="normalconnect">
+                    <h5> الطريقة التقليدية</h5>
+                    <div class="DivIn">
+                        {{ form.login }}
+                    </div>
+                    <div class="DivIn">
+                        {{ form.password }}
+                    </div>
+                    <div class="DivIn" style="padding-top:0">
+                        {{ form.remember }}<h6>{{ form.remember.label }}</h6>
+                    </div>
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <div class="col-md-12">
+                        <a class="pass-reset" href="{% url 'account_reset_password' %}">استرجاع كلمة السر</a>
+                    </div>
+                    <div class="col-md-6 login-submit-div">
+                        <button class="btn regular-link login-submit" id="login-submit" type="button">دخول</button>
+                    </div>
+                    <div class="col-md-6 signup-display-div">
+                        <button class="btn regular-link signup-display" id="signup-display" type="button">
+                            <a href="{% url 'account_signup' %}"> حساب جديد </a>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+    {% comment xhr %}{% endcomment %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(methode) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(methode));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+    </script>
+    {% comment login ajax %}{% endcomment %}
+    <script>
+        $('#login-submit').on('click', function (e) {
+            e.preventDefault()
+            $data = $('#login_form').serialize()
+            $.ajax({
+                type: "POST",
+                url: '{% url 'account_login' %}',
+                dataType: 'json',
+                data: {
+                    login: $('#id_login').val(),
+                    password: $('#id_password').val(),
+                    remember: $('#id_remember').val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+
+                },
+                success: LoginRedirect,
+                error: LoginError,
+            });
+
+            function LoginRedirect() {
+                window.location.href = '{% url 'BlogPosts' %}'
+            }
+
+            function LoginError(data) {
+                id = {
+                    login: 'id_login',
+                    password: 'id_password',
+                };
+                if ($('.normalconnect').children('p').length > 0) {
+                    $('.normalconnect').children('p').remove()
+                }
+                for (i in id) {
+                    $input = $('#' + id[i]);
+                    if ($input.hasClass("InputErr")) {
+                        $input.next('p').remove();
+                        $input.removeClass("InputErr");
+                    }
+
+                }
+                if (data['responseJSON']["form"]["errors"][0]) {
+                    MatchErr = document.createElement('p');
+                    MatchErr.classList.add('ErrTxt');
+                    MatchErr.style.textAlign = 'center';
+                    MatchErr.innerText = data['responseJSON']["form"]["errors"][0]
+                    $('.DivIn')[6].before(MatchErr);
+
+                }
+                else {
+                    for (var field in data['responseJSON']["form"]["fields"]) {
+                        if (field != 'remember' && data['responseJSON']["form"]["fields"][field]['errors'][0]) {
+
+                            var $input = $("#id_" + field);
+                            if ($input.next('p').length) {
+                                $input.next('p').remove();
+                            }
+                            document.getElementById("id_" + field).classList.add('InputErr');
+                            $input.after("<p class='ErrTxt'>" + data['responseJSON']["form"]["fields"][field]['errors'][0] + "</p>");
+                        }
+                    }
+                }
+            }
+        })
+
+
+    </script>
+
+{% endblock %}

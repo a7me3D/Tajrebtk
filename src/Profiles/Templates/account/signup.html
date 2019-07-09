@@ -1,0 +1,467 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load account %}
+
+
+{% block extra_css %}
+    <style>
+        * {
+            font-family: Changa;
+            font-weight: initial;
+            direction: rtl;
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("{% static 'portal/White-Background.jpg' %}");
+            background-origin: padding-box;
+            background-size: auto;
+            background-repeat: no-repeat;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        input {
+            background-color: transparent;
+        }
+
+        .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+            outline: 0;
+            outline-offset: 0;
+        }
+
+        .card {
+            position: absolute;
+            width: 35%;
+            min-width: auto;
+            right: 35%;
+            top: 13%;
+            background-color: white;
+            box-shadow: -11px 0px 22px -6px #0000002b;
+            transition: ease-out 300ms;
+
+        }
+
+        .SignupHeader {
+            padding-bottom: 3%;
+            text-align: center;
+        }
+
+        .socialconnect > h5, .normalconnect > h5 {
+            text-align: center;
+            font-size: 10px;
+            color: #616161;
+        }
+
+        .socialconnect > ul > li > .btn {
+            display: block;
+            padding: 3% 20%;
+            margin: 5px auto;
+        }
+
+        .DivIn {
+            padding: 2.5% 2%;
+        }
+
+        .card > .login-card > .login > .normalconnect .DivIn > input {
+            position: relative;
+            right: 25%;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #666666;
+            display: block;
+            width: 55%;
+            height: 50px;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid #e6e6e6;
+            padding: 0 30px 0 68px;
+            transition: ease 300ms;
+        }
+
+        input::placeholder {
+            font-size: small;
+            opacity: 1;
+        }
+
+        #signup_form > .DivIn > #id_rules {
+            width: initial;
+            height: 30px;
+        }
+
+        .DivIn > h6 {
+            margin: 0;
+            position: relative;
+            top: -22px;
+            right: 30%;
+        }
+
+        .signup-submit, .signup-submit:active, .signup-submit:hover, .signup-submit:active, .signup-submit:focus {
+            background: linear-gradient(90deg, rgb(8, 200, 93) 0%, rgba(120, 209, 109, 0.84) 100%);
+            padding: 5px 50px;
+            display: block;
+            position: relative;
+            margin: auto;
+            top: 15px;
+            color: white;
+        }
+
+        #signup_form > .DivIn > .InputErr {
+            border-bottom: 1px solid;
+            border-color: #E91E63;
+            height: 40px;
+        }
+
+        #signup_form > .DivIn > input {
+            position: relative;
+            right: 20%;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #666666;
+            display: block;
+            width: 55%;
+            height: 50px;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid #e6e6e6;
+            padding: 0 30px 0 68px;
+        }
+
+        #signup_form > .DivIn > .row > .col-md-4 > .InputErr {
+            border-bottom: 1px solid;
+            border-color: #E91E63;
+            height: 40px;
+        }
+
+        #signup_form > .DivIn > .row > .col-md-4 {
+            right: -20%;
+        }
+
+        #signup_form > .DivIn > .row > .col-md-4 > .ErrTxt {
+            position: relative;
+            margin: auto;
+            margin-top: 10px;
+            display: block;
+            font-size: smaller;
+            font-weight: 500;
+            color: firebrick;
+        }
+
+        #signup_form > .DivIn > .checkbox-label + .ErrTxt {
+            margin: 10px 60px;
+        }
+
+        #signup_form > .DivIn > .row > .col-md-4 > input {
+            position: relative;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #666666;
+            display: block;
+            width: 100%;
+            height: 50px;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid #e6e6e6;
+        }
+
+        h4 {
+            line-height: normal;
+            text-align: center;
+            font-size: inherit;
+            font-weight: 700;
+        }
+
+        .checkbox {
+            position: relative;
+            display: block;
+            left: -10%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-label {
+            right: 15%;
+            position: relative;
+            top: 5px;
+        }
+
+        .card > .login-card > .login > .normalconnect .DivIn > .InputErr {
+            border-bottom: 1px solid;
+            border-color: #E91E63;
+            height: 40px;
+        }
+
+        .ErrTxt {
+            position: relative;
+            margin: 2% 20% 0 0;
+            font-size: smaller;
+            font-weight: 500;
+            color: firebrick;
+        }
+
+        @media screen and (max-width: 991px) {
+
+            body {
+                direction: ltr
+            }
+
+            .col-md-6 {
+                margin: auto;
+                display: block;
+                position: relative;
+                width: 62%;
+            }
+
+            .card {
+                width: 83%;
+                right: 8%;
+                top: 20%;
+            }
+
+            .socialconnect > ul > li > .btn {
+                padding: 2% 15%;
+            }
+
+            .DivIn {
+                padding: 1% 2%;
+            }
+
+            #signup_form > .DivIn > .row > .col-md-4 {
+                right: 20%;
+                padding: 1% 2%;
+            }
+
+            #signup_form > .DivIn > .row > .col-md-4 > input {
+                font-size: 15px;
+                line-height: 1.5;
+                color: #666666;
+                display: block;
+                width: 55%;
+                height: 50px;
+                outline: none;
+                border: none;
+                border-bottom: 2px solid #e6e6e6;
+                padding: 0 30px 0 68px;
+            }
+        }
+
+        @media screen and (max-width: 880px) {
+
+            body {
+                direction: ltr
+            }
+
+            .card {
+                width: 83%;
+                right: 8%;
+                top: 20%;
+            }
+
+            .card > .login-card > .login > .normalconnect .DivIn > input {
+                padding: 0;
+            }
+
+        }
+
+        @media screen and (max-width: 425px) {
+
+            body {
+                direction: ltr;
+            }
+
+            .card {
+                width: 83%;
+                right: 8%;
+                top: 15%;
+            }
+
+            .DivIn {
+                padding: 0;
+            }
+
+            .DivIn > h6 {
+                right: 35%
+            }
+
+            .signup-submit, .signup-submit:active, .signup-submit:hover, .signup-submit:active {
+                padding: 4px 40px;
+                top: 20px;
+            }
+
+            #signup_form > .DivIn > input {
+                padding: 0;
+            }
+
+            #signup_form > .DivIn > .row > .col-md-4 > input {
+                padding: 0;
+            }
+
+            .checkbox {
+                left: 0;
+            }
+
+            .checkbox > input {
+                width: 30%;
+                right: 10px;
+            }
+
+            .checkbox-label {
+                right: 25%;
+            }
+
+            .checkbox-label > h6 {
+                font-size: 10px;
+            }
+        }
+
+
+    </style>
+{% endblock %}
+{% block content %}
+    {% include 'snippet/navbar.html' %}
+    <div class="card" id="card">
+        <div class='signup-card' id="signup-card">
+            <div class="normalconnect" id='normalconnect'>
+                <h2 class="SignupHeader" style="padding-bottom: 0;"> انظم الينا </h2>
+                <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    <div class="DivIn">
+                        {{ form.username }}
+                    </div>
+                    <div class="DivIn" style="padding: 0">
+                        <div class="row">
+                            <div class="col-md-4"> {{ form.last_name }} </div>
+                            <div class="col-md-4"> {{ form.first_name }} </div>
+                        </div>
+                    </div>
+                    <div class="DivIn">
+                        {{ form.email }}
+                    </div>
+                    <div class="DivIn">
+                        {{ form.password1 }}
+                    </div>
+                    <div class="DivIn">
+                        {{ form.password2 }}
+                    </div>
+                    <div class="DivIn" style="padding-top:0">
+                        <div class="checkbox">{{ form.rules }}</div>
+                        <div class="checkbox-label" id="checkbox-label"><h6>{{ form.rules.label }}</h6></div>
+                    </div>
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <button type="button" class="btn  signup-submit">تسجبل</button>
+                </form>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    </div>
+    {% comment xhr %}{% endcomment %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(methode) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(methode));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+    </script>
+    {% comment signup ajax %}{% endcomment %}
+    <script>
+        $('.signup-submit').on('click', function (e) {
+            e.preventDefault()
+            $data = $('#signup_form').serialize()
+            $.ajax({
+                type: "POST",
+                url: '{% url "account_signup" %}',
+                data: $data,
+                success: SignupRedirect,
+                error: SignupError,
+            });
+
+            function SignupRedirect() {
+                window.location.href = '{% url 'BlogPosts' %}'
+            }
+
+            function SignupError(data, response) {
+                id = {
+                    username: 'id_username',
+                    first_name: 'id_first_name',
+                    last_name: 'id_last_name',
+                    email: 'id_email',
+                    password1: 'id_password',
+                    password2: 'id_password2',
+                    rules: 'id_rules',
+                };
+                if ($('#signup_form').children('p').length > 0) {
+                    $('#signup_form').children('p').remove()
+                }
+                for (i in id) {
+                    $input = $('#' + id[i]);
+                    if ($input.hasClass("InputErr")) {
+                        $input.next('p').remove();
+                        $input.removeClass("InputErr");
+                    }
+
+                }
+                if (data['responseJSON']["form"]["errors"].length > 0) {
+                    MatchErr = document.createElement('p');
+                    MatchErr.classList.add('ErrTxt');
+                    MatchErr.style.textAlign = 'center';
+                    MatchErr.innerText = data['responseJSON']["form"]["errors"][0]
+                    $('.DivIn')[0].before(MatchErr);
+                }
+                else {
+                    for (var field in data['responseJSON']["form"]["fields"]) {
+                        var $input = $("#id_" + field);
+                        if (field == 'rules') {
+                            $input = $("#checkbox-label")
+                        }
+                        if ($input.next('p').length) {
+                            $input.next('p').remove();
+                        }
+                        if (data['responseJSON']["form"]["fields"][field]['errors'][0]) {
+                            document.getElementById("id_" + field).classList.add('InputErr');
+                            $input.after("<p class='ErrTxt' style='display:none'>" + data['responseJSON']["form"]["fields"][field]['errors'][0] + "</p>")
+                        }
+                        $('.ErrTxt').fadeIn()
+                    }
+
+
+                }
+            }
+        })
+
+
+    </script>
+
+{% endblock %}
