@@ -1,0 +1,333 @@
+{% extends 'base_writer.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block extra_css %}
+    <link href="{% static 'froala_editor/css/froala_cust.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/writer.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+    <!-- Trigger/Open The Modal -->
+    <div class="right-list">
+        <button class="btn next" type="button" id="myBtn">
+            التالي
+        </button>
+
+        <div class="return-dropdown" id="return-dropdown">
+            <button class="btn" type="button" style="padding: 10px 30px;color:white;background-color: #232222">
+                عودة
+            </button>
+            <div class="dropdown-content">
+                <a href="{% url 'BlogPosts' %}"> الرئيسية</a>
+                <a href="{% url 'Profile'  username=request.user %}"> الصفحة الشخصية</a>
+            </div>
+        </div>
+    </div>
+    <form novalidate id="writer" method="POST" data-url='{{ request.build_absolute_uri|safe }}'
+          style="padding-bottom: 3vh" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="container" style="padding: 0 50px;
+    margin-top: 15px;
+    padding-top: 15px;
+    height: auto;">
+            <div class="col-md-6 col-title" style="z-index: 3">
+                {{ editor.title|as_crispy_field:'bootstrap4' }}
+            </div>
+            {{ editor.body|as_crispy_field:'bootstrap4' }}
+            <!-- Error Modal -->
+            <div id="ErrorModal" class="modal">
+                <div class="ErrorModal-content f-modal-alert modal-content">
+                    <div class="f-modal-icon f-modal-warning scaleWarning">
+                        <span class="f-modal-body pulseWarningIns"></span>
+                        <span class="f-modal-dot pulseWarningIns"></span>
+                    </div>
+                    <h4>
+                        عدل معطياتك قبل النشر
+                    </h4>
+                    <div id="DivError">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="NextModal" class="modal">
+            <!-- Modal content -->
+            <div class="NextModal-content modal-content">
+                <span class="close">x</span>
+                <div class="DivIn header">
+                    <h2 style="text-align: center;font-family:Ara jozoor;color:crimson;margin:0 0 -20px 0">
+                        خطوة
+                        اخيرة بعد.... </h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="DivIn">
+                            <span class="label"> اختر تصنيفا </span>
+                            <div>
+                                {{ editor.tags }}
+                            </div>
+                        </div>
+                        <div class="DivIn">
+                            {{ editor.description }}
+                        </div>
+                        <div class="DivIn">
+                            <span class="label"> كلمات دلالية </span>
+                            <div>
+                                {{ editor.keys }}
+                                {{ editor.keys.errors }}
+                            </div>
+                        </div>
+                        <div class="DivIn">
+                            <span class="label"> اذا كان الموضوع منقولا او مترجما شارك مصدره </span>
+                            {{ editor.source }}
+                            {{ editor.source.errors }}
+                        </div>
+                        <div class="DivIn">
+                            <div>
+                                {{ editor.anonymous }}<span class="label"
+                                                            style="font-size: small;color: black;">{{ editor.anonymous.label }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="DivIn" style="padding-top: 50px">
+                            <div class="avatar-upload">
+
+                                <div class="avatar-edit">
+                                    {{ editor.post_cover_original }}
+                                    <label for="id_post_cover_original"></label>
+
+                                </div>
+
+                                <div class="avatar-preview" id="avatar-preview">
+
+                                    <div id="imagePreview" name="imagePreview"
+                                         style="background-image: url({% static 'thumb/UploadThumb.gif' %});">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            {{ editor.post_cover_original.errors }}
+                        </div>
+
+                    </div>
+
+                </div>
+                <button class="btn DivBtn" type="button" id="Publish"><h6> نشر </h6></button>
+            </div>
+        </div>
+        </div>
+    </form>
+
+
+{% endblock %}
+{% block extra_js %}
+
+    <script src="{% static 'nice_select/js/jquery.nice-select.js' %}"></script>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(methode) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(methode));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+    </script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                    $('#imagePreview').hide();
+                    $('#imagePreview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#id_post_cover_original").change(function () {
+            readURL(this);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('select:not(.ignore)').niceSelect();
+        });
+    </script>
+    <script>
+        function OPenModal(ModalName) {
+            // Get the modal
+            var modal = document.getElementById(ModalName);
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+            //  Open the Modal
+            modal.style.display = "block";
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    if (ModalName == 'ErrorModal') {
+                        var parent = document.getElementById("DivError");
+                        while (parent.firstChild) {
+                            parent.removeChild(parent.firstChild)
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            var $NextBtn = $(".next")
+            $NextBtn.click(function (e) {
+                e.preventDefault();
+                $PreData = $("#writer").serialize()
+                $EndPt = $('#writer').attr('data-url')
+                $.ajax({
+                    type: "POSt",
+                    url: $EndPt,
+                    dataType: 'json',
+                    data: {
+                        title: $('#title').val(),
+                        body: $('#id_body').val(),
+                        next: 'next',
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: OpenNextModal,
+                    error: OpenErrorModal,
+                });
+
+                function OpenNextModal(json) {
+                    OPenModal('NextModal');
+                }
+
+                function OpenErrorModal(xhr, errmsg, err) {
+                    var element = document.getElementById('DivError');
+                    var list = document.createElement('ul');
+
+                    for (e in xhr.responseJSON) {
+                        var para = document.createElement("h5");
+                        para.classList.add('ErrorTxt');
+                        var node = document.createTextNode(xhr.responseJSON[e]);
+                        var li = document.createElement('li');
+                        para.appendChild(node);
+                        li.appendChild(para);
+                        list.appendChild(li);
+                    }
+                    ;
+                    element.appendChild(list);
+                    OPenModal("ErrorModal")
+                };
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var $PublishBtn = $("#Publish");
+            $PublishBtn.on('click', function (e) {
+                e.preventDefault();
+                $EndPt = $('#writer').attr('data-url');
+                data = new FormData(document.getElementById('writer'))
+
+                $.ajax({
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    async: true,
+                    type: "POST",
+                    url: $EndPt,
+                    data: data,
+
+
+                    success: Save,
+                    error: Raise,
+                });
+
+                function Save(json) {
+                    window.location.href = '{% url 'BlogPosts' %}'
+
+                }
+
+                function Raise(data) {
+                    id = {
+                        keys: 'id_keys',
+                        image: 'imagePreview',
+                        tags: 'id_tags',
+                        description: 'id_description',
+                        source: 'id_source'
+                    };
+                    for (i in id) {
+                        $input = $('#' + id[i]);
+                        if ($input.next('p').length) {
+                            if (document.getElementById(id[i]).classList[1]) {
+                                document.getElementById(id[i]).classList.remove("InputErr");
+                            }
+                            $input.next('p').remove();
+                        }
+                    }
+                    for (var key in data.responseJSON["errors"]) {
+                        var name = key;
+                        if (key == 'post_cover_original') {
+                            var name = 'imagePreview';
+                            var $div = $("div[name='" + name + "']");
+                            if ($("div").next('p').length) {
+                                $("div").next('p').remove();
+                            }
+                            document.getElementById("avatar-preview").classList.add("ImageErr");
+                            $div.after("<p class='ErrTxt'>" + data.responseJSON["errors"][key] + "</p>");
+                        }
+
+                        else {
+                            var $input = $("#id_" + key);
+                            if ($input.next('p').length) {
+                                $input.next('p').remove();
+                            }
+                            document.getElementById("id_" + key).classList.add('InputErr');
+                            $input.after("<p class='ErrTxt'>" + data.responseJSON["errors"][key][0] + "</p>");
+                        }
+                    }
+                    ;
+                }
+            });
+        })
+    </script>
+
+{% endblock %}
+
+</html>

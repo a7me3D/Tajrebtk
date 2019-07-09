@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load static %}
+{% load  thumbnail %}
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="margin: auto">
+        <div class="row row-sugg animated bounceInUp">
+            {% with post=sugg %}
+                <div class="col col-md-5 col-xs-12 col-sm-12">
+                    <article class="col col-md-12 sugg-l widget-sugg card"
+                             style="background-image: url({{ post.0.post_cover_thumb.url }});">
+                        <div class="wrapper">
+                            <div class="data">
+                                <div class="content">
+                                    <span class="author">{{ post.0.author }}</span>
+                                    <h2 class="title">{{ post.0.title }}</h2>
+                                    <div class="widget-detail">
+                                        <p>{{ post.0.body|truncatewords:15|striptags }}</p>
+                                        <a href="article/{{ post.0.slug|urlencode }}" class="button show-more">أكمل
+                                            القرائة</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col col-md-12 sugg-m widget-sugg card"
+                             style="background-image: url({{ post.1.post_cover_thumb.url }});">
+                        <div class="wrapper">
+                            <div class="data">
+                                <div class="content">
+                                    <span class="author">{{ post.1.author }}</span>
+                                    <h2 class="title">{{ post.1.title }}</h2>
+                                    <div class="widget-detail">
+                                        <p>{{ post.0.body|truncatewords:15|striptags }}</p>
+                                        <a href="article/{{ post.1.slug|urlencode }}" class="button show-more">أكمل
+                                            القرائة</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col col-md-3 col-xs-12">
+                    <article class="col col-md-12 sugg-m widget-sugg card"
+                             style="background-image: url({{ post.2.post_cover_thumb.url }}); height:390px;">
+                        <div class="wrapper">
+                            <div class="data">
+                                <div class="content">
+                                    <span class="author">{{ post.2.author }}</span>
+                                    <h2 class="title">{{ post.2.title }}</h2>
+                                    <div class="widget-detail">
+                                        <p>{{ post.2.body|truncatewords:10|striptags }}</p>
+                                        <a href="article/{{ post.2.slug|urlencode }}" class="button show-more">أكمل
+                                            القرائة</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col col-md-12 sugg-m widget-sugg card"
+                             style="background-image: url({{ post.3.post_cover_thumb.url }});height: 365px;">
+                        <div class="wrapper">
+                            <div class="data">
+                                <div class="content">
+                                    <span class="author">{{ post.3.author }}</span>
+                                    <h2 class="title">{{ post.3.title }}</h2>
+                                    <div class="widget-detail">
+                                        <p>{{ post.3.body|truncatewords:10|striptags }}</p>
+                                        <a href="article/{{ post.3.slug|urlencode }}" class="button show-more">أكمل
+                                            القرائة</a>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col col-md-4 col-xs-12">
+                    <article class="col col-md-12 sugg-m widget-sugg card"
+                             style="background: url('{{ post.4.post_cover_thumb.url }}')">
+                        <div class="wrapper">
+                            <div class="data">
+                                <div class="content">
+                                    <span class="author">{{ post.4.author }}</span>
+                                    <h2 class="title">{{ post.4.title }}</h2>
+                                    <div class="widget-detail">
+                                        <p>{{ post.4.body|truncatewords:20|striptags }}</p>
+                                        <a href="article/{{ post.4.slug|urlencode }}" class="button show-more">أكمل
+                                            القرائة</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col col-md-12 sugg-l widget-sugg card"
+
+                             style="background: url('{{ post.5.post_cover_thumb.url }}')">
+                        <div class="wrapper">
+                            <div class="data">
+                                <div class="content">
+                                    <span class="author">{{ post.5.author }}</span>
+                                    <h2 class="title">{{ post.5.title }}</h2>
+                                    <div class="widget-detail">
+                                        <p>{{ post.5.body|truncatewords:20|striptags }}</p>
+                                        <a href="article/{{ post.5.slug|urlencode }}" class="button show-more">أكمل
+                                            القرائة</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                </div>
+                </div>
+            {% endwith %}
+    <div class="container">
+        <button class="btn btn-default load-more" type="button">
+            <p style="margin: 0;">التجارب الاحدث</p>
+        </button>
+    </div>
+    <div class="backbox mainbox" style="display: none">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs ">
+                <li class="active tabs"><a href="#Latest" value="">الاحدث </a></li>
+                <li class="tabs"><a href="#experience" value="تجارب شخصية">تجارب شخصية</a></li>
+                <li class="tabs"><a href="#culture" value="ثقافات">ثقافات</a></li>
+                <li class="tabs"><a href="#technologie" value="تكنلوجيا">تكنلوجيا</a>
+                </li>
+            </ul>
+            <div class="container-fluid" id="posts" style="padding-bottom: 100px;">
+                <div role="tabpanel" class="tab-pane active infinite-container" id="Latest">
+                    {% include 'posts_index.html' %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $('.load-more').on('click', function () {
+            $('.row-sugg').addClass('animated fast slideOutDown');
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            window.setTimeout(
+                function () {
+                    $('.row-sugg').hide();
+                },
+                1000
+            );
+            $('.backbox').fadeIn(600, function () {
+                $('.backbox').addClass('animated fast fadeInUpBig');
+                $('.DivSearch').fadeIn(600, function () {
+                    $('.DivSearch').addClass('animated bounceIn')
+                })
+            })
+        })
+
+    </script>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(methode) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(methode));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+    </script>
+    <script>
+        $(document).on('submit', 'form', function (e) {
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'Posts' %}",
+                dataType: 'html',
+                data: {
+                    'search': $("#search").val(),
+                },
+                success: function (data) {
+                    $('#posts').html(data)
+                },
+                failure: function (jqXHR) {
+                }
+            })
+            return false
+        })
+
+        $('.tabs a').on('click', function (e) {
+            $tag = $(this).html()
+            $('[name="active"]').removeAttr('name')
+            $(this).attr('name', 'active')
+            $.ajax({
+                type: 'POST',
+                url: '{% url "Posts" %}',
+                dataType: 'html',
+                data: {
+                    'tag': $tag
+                },
+                success: function (data) {
+                    $('#posts').html(data)
+                }
+
+            })
+            return false
+        })
+    </script>
+{% endblock %}
+
+

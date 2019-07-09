@@ -1,0 +1,223 @@
+{% load  static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>-
+        {% block title %}
+            {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+            {% with self.get_site.site_name as site_name %}
+                {% if site_name %}- {{ site_name }}{% endif %}
+            {% endwith %}
+        {% endblock %}
+    </title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
+    {# Global stylesheets #}
+    <!-- font-awesome css !-->
+    <link href="{% static 'font-awesome/css/fontawesome-all.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!--Bootstra css !-->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-4.0\css\bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'nice_select/css/nice-select.css' %}">
+    <!-- froala resources !-->
+    {{ editor.media }}
+    <script>
+        $(function () {
+            $('#id_body').froalaEditor({
+                "toolbarInline": false,
+                "inlineMode": false,
+                "language": "ar",
+                "imageUploadParams":
+                    {"csrfmiddlewaretoken": getCookie("csrftoken")},
+                "fileUploadURL": "/froala_editor/file_upload/",
+                "imageUploadURL":
+                    "/froala_editor/image_upload/",
+                "theme": "royal",
+                "fileUploadParams": {
+                    "csrfmiddlewaretoken":
+                        getCookie("csrftoken")
+                },
+                imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+                imageEditButtons: ['imageAlign', 'imageCaption', 'imageRemove', '|',
+                     'imageStyle', 'imageAlt'],
+                fontSize: ['12', '18', '30', '60'],
+                fileUpload: false,
+                htmlDoNotWrapTags: ['script', 'style', 'img', 'svg'],
+                pasteAllowedStyleProps: ['font-family', 'font-size', 'color'],
+                toolbarButtonsXS: ['bold', 'italic', 'underline'],
+                quickInsertTags: []
+            })
+        });
+    </script>
+    <!-- general css !-->
+    {% block extra_css %}
+
+    {% endblock %}
+
+
+</head>
+
+<noscript>
+    <style>
+        .writer {
+            display: none;
+        }
+
+        .no-js {
+            display: block;
+
+        }
+
+        body {
+            background-color: white;
+        }
+
+        .col-md-6 {
+            float: right;
+        }
+
+        .container {
+            padding-top: 10%;
+        }
+
+        .img-responsive {
+            position: relative;
+            float: right;
+            top: -40px;
+        }
+
+        h3 {
+            font-family: changa;
+            line-height: 2;
+            font-size: 20px;
+            text-align: center;
+            position: relative;
+            top: 20%;
+        }
+
+        h3 > a {
+            font-size: 20Px;
+            color: crimson;
+            padding: 0;
+            font-family: changa;
+
+        }
+
+        h3 > a:hover {
+            color: dodgerblue;
+        }
+
+        .footer {
+            padding-top: 15%
+        }
+
+        nav {
+            text-align-last: center;
+            margin: auto;
+            position: relative;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: inline;
+        }
+
+        a {
+            padding: 0 25px;
+            font-family: "Cairo SemiBold";
+            font-size: 15px;
+            font-family: 'changa';
+        }
+
+        a:focus, a:hover {
+            text-decoration: none;
+            color: #1d2124;
+        }
+
+        @media screen and (max-width: 991px) {
+            .col-md-6 {
+                border: none;
+                float: none;
+            }
+
+            .img-responsive {
+                top: 0;
+            }
+
+            h3 {
+                line-height: 1.5;
+                font-size: 1rem
+            }
+
+            li {
+                margin: 0;
+            }
+
+            a {
+                padding: 0 11%;
+                font-size: .7rem;
+            }
+        }
+
+    </style>
+    <div class=" no-js container">
+        <div class="row">
+            <div class="col-md-6"><img class="img-responsive"
+                                       src="{% static 'thumb/js_blocked.svg' %}"/></div>
+            <div class="col-md-6" style="border-right: 3px solid black">
+                <h3>
+                    يبدو ان الجافاسكريبت غير مفعل على متصفحك <br>
+                    و هذا للاسف يعطل خاصيات كثيرة في الصفحة<br>
+                    و لتامين تجربة استخدام رائعة يرجى اعادة تفعيله<br>
+                    او زيارة الرابط:<a href="https://www.enable-javascript.com/ar/">كيف افعل الجافاسكريبت في
+                    ثواني</a><br>
+                </h3>
+            </div>
+        </div>
+        <div class="footer container">
+            <nav style='margin:auto'>
+                <ul>
+                    <li>
+                        <a href="#"> عن الموقع </a>
+                    </li>
+                    <li>
+                        -
+                    </li>
+                    <li>
+                        <a href="{% url 'BlogPosts' %}"> الصفحة الرئيسية </a>
+                    </li>
+                    <li>
+                        -
+                    </li>
+                    <li>
+                        <a href="#"> تواصل معنا </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</noscript>
+<body>
+<div class="writer">
+    {% block content %}{% endblock %}
+</div>
+{# Global javascript #}
+
+
+{% block extra_js %}
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% load  static %}
+{% if posts_count == 0 %}
+    <div class="container" style="margin-top: 15%;text-align: center"><h2
+            style="font-family:changa;color:white">لا يوجد تجارب لهذا البحث</h2></div>
+{% else %}
+    {% load el_pagination_tags %}
+    {% paginate blogpages %}
+    <div class="row animated fadeIn">
+        {% for post in blogpages %}
+            <div class="col-md-4 animated fadeIn">
+                <article class="widgetM widget-sugg card "
+                         style="background-image: url({{ post.post_cover_thumb.url }})">
+                    <div class="wrapper">
+                        <div class="data">
+                            <section>
+                                <i class="far fa-calendar-alt"></i>
+                                <date>{{ post.date }}</date>
+                            </section>
+                            <div class="content">
+                                <span class="author">{{ post.author }}</span>
+                                <h2 class="title">{{ post.title }}</h2>
+                                <div class="widget-detail">
+                                    <hr>
+                                    <p>{{ post.body|truncatewords:15 }}</p>
+                                    <a href="article/{{ post.slug|urlencode }}"
+                                       class="button show-more">أكمل القرائة</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            {% if forloop.counter|divisibleby:3 %}
+                </div>
+                <div class="row">
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% show_more 'أعرض المزيد' %}
+{% endif %}
+{% block js %}
+    <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: false,
+        });
+    </script>
+{% endblock %}

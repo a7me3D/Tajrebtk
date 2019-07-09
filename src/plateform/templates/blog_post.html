@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/froala_editor/css/froala_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link href="{% static 'css/blog_post.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+
+    {% if not user.is_authenticated %}
+        <!-- Login Modal -->
+        <div id="LoginModal" class="modal">
+            <!-- Modal content -->
+            <div class="LoginModal-content modal-content">
+                <h2 class="modal-title">أيها الزائر الكريم</h2>
+                <h4 class="modal-text">
+                    <br> هل لك ان تعطينا من وقتك القليل لتسجل حسابا
+                    وبذلك تتمكن من مشاركة ٱرائك و نشر تجاربك ؟
+                </h4>
+                <a class="login-redirect" href="{% url 'portal' %}">سجل دخولك</a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class=" mainbox animated slideInUp delay-2s">
+        <div class="container">
+            <header class="header animated zoomIn delay-2s">
+                <ul class="list-detail">
+                    <li class="detail"><i class="fa fa-thumbs-up"></i> اعجاب : {{ post_slug.hits }} </li>
+                    <li class="detail"><i class="fas fa-tags"></i> تصنيف : {{ post_slug.tags }}</li>
+                </ul>
+                <img class='avatar animated ' src="{{ author_avatar.avatar.url }}" alt={{ post_slug.author }}/>
+                <p class="author animated  ">{{ post_slug.author }}</p>
+                <p class="date animated " style="padding: 0;font-size: 0.7rem;">{{ post_slug.date }}</p>
+                <h3 class='title animated fadeIn delay-3s'> {{ post_slug.title }} </h3>
+            </header>
+            <main>
+                <h6 class='content'>{{ post_slug.body|safe }}</h6>
+            </main>
+            <section class="buttom-btns">
+                <ul style="margin:0; padding: 0">
+                    <li>
+                        <a class="fb-share fab fa-facebook-f"
+                           href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }} "
+                           target="_blank">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="twitter-share fab fa-twitter"
+                           href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" target="_blank">
+                        </a>
+                    </li>
+                    <li>
+                        <i class="thumb far fa-thumbs-up"></i>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+    <div class="container block2">
+        <div class="row">
+            {% for rel in related %}
+                <div class="col col-md-4 col-sm-12 col-xs-12 related">
+                    <header style="background-image:url({{ rel.post_cover_thumb.url }})">
+                    </header>
+                    <article>
+                        <a href="{% url 'BlogPost' rel.slug %}">{{ rel.title }}</a>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="comment-box container">
+            {% load custom_comments_tags %}
+            {% if user.is_authenticated %}
+                {% comment_form post_slug request.user %}
+            {% endif %}
+        </div>
+        <div class="comment-list" style="margin-top: 15vh">
+            {% get_comments post_slug request.user %}
+
+
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        $(document).ready(function () {
+            var scrollTop = 0;
+            $(window).scroll(function () {
+                scrollTop = $(window).scrollTop();
+                $('.counter').html(scrollTop);
+
+                if (scrollTop >= 100) {
+                    $('.Brand').addClass('Brand-min');
+                } else if (scrollTop < 100) {
+                    $('.Brands').removeClass('Brand-min');
+                }
+
+            });
+        });
+
+    </script>
+    <script>
+        function isScrolledIntoView(elem) {
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+            var elemTop = $(elem).offset().top;
+            var elemBottom = elemTop + $(elem).height() + 50;
+            return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom) && (elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+        }
+
+        load = false;
+        $(window).scroll(function () {
+            if (isScrolledIntoView($('.buttom-btns'))) {
+                if (!load) {
+                    load = true;
+                    var head = document.getElementsByTagName('head')[0];
+                    var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = "{% static "js/comments/comments.js" %}";
+                    head.appendChild(script);
+                }
+                $('.block2').css('opacity', '1');
+            }
+        });
+    </script>
+    <script>
+        function OpenLoginModal(ModalName) {
+            // Get the modal
+            var modal = document.getElementById(ModalName);
+            //  Open the Modal
+            modal.style.display = "block";
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
+
+        $('.thumb').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: {% url 'PostLikeToggle' %},
+                data: {
+                    'post_id': {{ post_slug.id }},
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: LikePost,
+                dataType: 'html'
+            });
+
+            function LikePost(data, jqXHR) {
+                {% if user.is_authenticated %}
+                    var data = $.parseJSON(data)
+                    if (data['liked']) {
+                        $('.thumb').removeClass("fas fa-thumbs-up").addClass('far fa-thumbs-up')
+                    }
+                    else {
+                        $('.thumb').removeClass("far fa-thumbs-up").addClass('fas fa-thumbs-up')
+                    }
+                {% else %}
+                    OpenLoginModal('LoginModal')
+                {% endif %}
+
+
+            }
+        });
+    </script>
+{% endblock %}
+
+

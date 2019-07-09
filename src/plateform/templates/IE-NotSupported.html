@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+
+    <style>
+    *{
+        direction: rtl;
+    }
+        .container {
+            padding-top: 15%;
+        }
+
+        .img-responsive{
+            float: right;
+            top: -40px;
+        }
+
+        h3 {
+            font-family: "Noto Kufi Arabic";
+            line-height: 2;
+        }
+
+        .footer {
+            display: block;
+            position: relative;
+            margin-top: 5%;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: inline;
+            margin-right: 30%;
+            margin-left: -30%;
+
+        }
+
+        a {
+            padding: 0 40px;
+            font-family: "Cairo SemiBold";
+            font-size: 15px;
+        }
+
+        a:focus, a:hover {
+            text-decoration: none;
+            color: #1d2124;
+        }
+
+        @media screen and (max-width: 991px) {
+            .col-md-6{
+                border: none;
+            }
+            .img-responsive{
+                top: 0;
+            }
+            h3{
+                text-align: center;
+                font-size: 20px;
+            }
+            li{
+                margin: 0;
+            }
+            a {
+                padding: 0 11%;
+                font-family: "Cairo SemiBold";
+                font-size: x-small;
+            }
+        }
+
+    </style>
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6" style="float: right"><img class="img-responsive" src="{% static 'thumb/ie_no_support.jpg'%}"/></div>
+            <div class="col-md-6" style="border-right: 3px solid black">
+                <h3>
+                    عذرا و لكنا منعنا هذا المتصفح <br>
+                    من الوصول الى الصفحة النشر<br>
+                    لانه يعطل ميزات و خصائص الموقع<br>
+                    وحرصا لحصولك على تجربة رائعة<br>
+                    يرجى تغيير المتصفح<br>
+                </h3>
+            </div>
+        </div>
+        <div class="footer">
+            <ul>
+                <li>
+                    <a href="#"> عن الموقع </a>
+                </li>
+                <li>
+                    -
+                </li>
+                <li>
+                    <a href="{% url 'BlogPosts' %}"> الصفحة الرئيسية </a>
+                </li>
+                <li>
+                    -
+                </li>
+                <li>
+                    <a href="#"> تواصل معنا </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+{% endblock %}

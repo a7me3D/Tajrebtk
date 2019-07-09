@@ -1,0 +1,36 @@
+{% load  custom_comments_tags %}
+<article>
+    {% if object.user %}
+        <input hidden value="{% get_url object %}"/>
+        <img id="profile-photo" src="{% get_avatar Profile object %}"/>
+        <h4 class="comment-username"><a href="">{{ object.user.username }}</a></h4>
+    {% endif %}
+
+    <time class="comment-date">{{ object.created_at }}</time>
+
+    <like class="like-count" id="likes-count-{{ object.id }}">{{ object.likes_count }} اعجاب </like>
+
+    <p id='comment-{{ object.id }}'> {{ object.comment }} </p>
+    <div class="comment-btns">
+    {% if object.user %}
+        {% if object.user.id == user.id %}
+            <form class="comment-delete-form" method='DELETE' action="{% url "comment-delete" object.pk %}">
+                <input value="{% csrf_token %}" id="csrf" hidden>
+                {% csrf_token %}
+                    <input type="submit" value="" class="fas fa-trash comment-delete-btn" data-id="{{ object.id }}"/>
+            </form>
+        {% endif %}
+    {% endif %}
+    {% if allow_likes %}
+        {% if liked %}
+            <button class="like-comment-btn" id="like-btn-{{ object.id }}" data-like="liked" data-id="{{ object.id }}">
+                <i class="fas fa-heart"></i>
+            </button>
+        {% else %}
+            <button class="like-comment-btn" id="like-btn-{{ object.id }}" data-like="like" data-id="{{ object.id }}">
+                <i class="far fa-heart"></i>
+            </button>
+        {% endif %}
+    {% endif %}
+</div>
+</article>
