@@ -1,0 +1,183 @@
+{% load static %}
+
+<div class="action-bar animated fadeIn slower">
+    <div class="DropDown-Btn">
+        <i class="material-icons fa fa-bars" ripple id='menu'></i>
+    </div>
+
+    <div class="Brand"><a href="{% url 'BlogPosts' %}"><h1>تجربتك</h1></a></div>
+    <form method="POST">
+        {% csrf_token %}
+        {% url 'BlogPosts' as home %}
+        {% if '/' == request.path  or '/blog/' == request.path %}
+            <div class="DivSearch" style="opacity: 0">
+                <div class="field-input">
+                    <input id='search' name="search" type="text" placeholder="بحث ..."/><span
+                        class="fa fa-search"> </span>
+                </div>
+            </div>
+        {% endif %}
+    </form>
+    <div class="nav-Btn">
+        <button class="animated btn writer-btn">
+            <i class="fas fa-pencil-alt"></i>
+            <a href="{% url 'Editor' %}"><h6>انشر تجربتك</h6></a>
+        </button>
+
+        {% if not request.user.is_authenticated %}
+            <button class="animated btn login-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                <a href="{% url 'portal' %}"><h6>تسجيل الدخول</h6></a>
+            </button>
+        {% endif %}
+    </div>
+
+</div>
+
+<div class="side-nav">
+    {% if request.user.is_authenticated %}
+        <header>
+            <div class="avatars-container">
+                <img src="{{ user.userprofile.avatar.url }}" width=70 height=70/>
+            </div>
+            <div class="rich-area">
+                <a href="#">{{ user.first_name }} {{ user.last_name }}</a>
+                <div class="email">
+                    <p>{{ user.email }}<p/>
+                </div>
+            </div>
+        </header>
+        <nav>
+            <ul>
+                <li><i ripple class="fas fa-user-circle"></i>
+                    <a href="{% url 'Profile' username=request.user %}">الصفحة الشخصية</a></li>
+                <li><i class="fas fa-user-edit"></i><a href="{% url 'EditProfile' %}"> تعديل الملف الشخصي</a></li>
+                <li><i ripple class="fas fa-pencil-alt"></i>
+                    <a href="{% url 'Editor' %}">انشر تجربتك</a></li>
+                <li class="random"><i ripple class="fas fa-random"></i> تجربة عشوائية</li>
+                <li><i ripple class="fas fa-envelope"></i><a href="{% url 'Contact' %}"> الدعم الفني</a></li>
+                <li><i ripple class="fas fa-sign-out-alt"></i><a href="{% url 'account_logout' %}">تسجيل الخروج</a>
+                </li>
+            </ul>
+        </nav>
+    {% else %}
+        <header style="background:#858585 ">
+            <div class="avatars-container">
+                <img src="{% static 'anonym user/skeleton.png' %}" width=70 height=70/>
+            </div>
+            <div class="rich-area">
+                <a href="#">مستخدم مجهول</a>
+            </div>
+        </header>
+        <nav>
+            <ul>
+                <li><i ripple class="fas fa-sign-in-alt"></i>
+                    <a href="{% url 'portal' %}">تسجيل الدخول</a></li>
+                <li><i ripple class="fas fa-pencil-alt"></i>
+                    <a href="{% url 'Editor' %}">انشر تجربتك</a></li>
+                <li class="random"><i ripple class="fas fa-random"></i> تجربة عشوائية</li>
+                <li><i ripple class="fas fa-envelope"></i><a href="{% url 'Contact' %}"> الدعم الفني</a></li>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+</body>
+<script>
+    $('.random').on('click', function (e) {
+        $.ajax({
+            type: 'GET',
+            url: '{% url 'Posts' %}',
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            dataType: "json",
+
+            success: function (data) {
+                lucky = data['lucky']
+                window.location = lucky
+            }
+        })
+    })
+
+</script>
+<script>
+    // Ripple effect from 'Medium' site
+    (function () {
+        var cleanUp, debounce, i, len, ripple, rippleContainer, ripples, showRipple;
+
+        debounce = function (func, delay) {
+            var inDebounce;
+            inDebounce = undefined;
+            return function () {
+                var args, context;
+                context = this;
+                args = arguments;
+                clearTimeout(inDebounce);
+                return inDebounce = setTimeout(function () {
+                    return func.apply(context, args);
+                }, delay);
+            };
+        };
+
+        showRipple = function (e) {
+            var pos, ripple, rippler, size, style, x, y;
+            ripple = this;
+            rippler = document.createElement('span');
+            size = ripple.offsetWidth;
+            pos = ripple.getBoundingClientRect();
+            x = e.pageX - pos.left - (size / 2);
+            y = e.pageY - pos.top - (size / 2);
+            style = 'top:' + y + 'px; left: ' + x + 'px; height: ' + size + 'px; width: ' + size + 'px;';
+            ripple.rippleContainer.appendChild(rippler);
+            return rippler.setAttribute('style', style);
+        };
+
+        cleanUp = function () {
+            while (this.rippleContainer.firstChild) {
+                this.rippleContainer.removeChild(this.rippleContainer.firstChild);
+            }
+        };
+
+        ripples = document.querySelectorAll('[ripple]');
+
+        for (i = 0, len = ripples.length; i < len; i++) {
+            ripple = ripples[i];
+            rippleContainer = document.createElement('div');
+            rippleContainer.className = 'ripple--container';
+            ripple.addEventListener('mousedown', showRipple);
+            ripple.addEventListener('mouseup', debounce(cleanUp, 2000));
+            ripple.rippleContainer = rippleContainer;
+            ripple.appendChild(rippleContainer);
+        }
+    }());
+
+    var actionBar = document.querySelector('.action-bar')
+    var menuIcon = document.querySelector('#menu')
+    var sideNav = document.querySelector('.side-nav')
+    var width = document.documentElement.clientWidth
+    var nav = document.querySelector('nav')
+    var brand = document.querySelector('.Brand')
+    sideNav.style.width = width - actionBar.clientHeight + 'px'
+
+    menuIcon.addEventListener('click', openSideNav)
+
+
+    window.addEventListener('click', function (e) {
+            if (e.target.parentNode != menuIcon) {
+                closeSideNav();
+            }
+        }
+    );
+
+    window.addEventListener('resize', closeSideNav)
+
+    function openSideNav() {
+        sideNav.style.transform = 'translateX(0)';
+    }
+
+    function closeSideNav() {
+        sideNav.style.transform = 'translateX(330px)';
+
+    }
+</script>

@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+
+    <style>
+	/* nav for all */
+	nav{
+            background-color: white;
+        }
+
+        
+		.top-nav{
+			padding-top: 10px;
+			top: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			margin-bottom: 0;
+			z-index: 1;
+			background-color: rgba(247, 243, 243, 0.44);
+			box-shadow: 0 1px 2px 0px rgba(0, 0, 0, 0.16);
+		}
+
+		.nav{
+		    border-radius:1px;
+			margin-top:-11px;
+			border-bottom:solid 1px white;
+
+		}
+		.nav-title{
+			font-family: "Changa";
+			color: rgb(51, 46, 46);
+			font-weight: bold;
+			float: right;
+			margin-right: 33px;
+			position: relative;
+		}
+		.nav-sec{
+			position:relative;
+			font-family: "Changa";
+
+		}
+		ul{
+			list-style:none;
+		}
+
+		.top-nav>.container>.nav-sec>ul>li {
+			float: right;
+			padding: 15px;
+			color: #989889;
+			margin: 0 auto;
+		}
+		.nav-log{
+			position:relative;
+			font-size: 17px;
+			font-family: "Changa";
+			float:left;
+		}
+		.top-nav>.container>.nav-log>ul>li {
+			float: right;
+			padding: 15px;
+			color:#989889;
+			margin: 0 auto;
+		}
+
+		/* Dropdown Button */
+		.dropbtn {
+			display:none;
+			color: white;
+			padding: 16px;
+			font-size: 16px;
+			border: none;
+			cursor: pointer;
+		}
+
+
+		/* The container  - needed to position the dropdown content */
+		.dropdown {
+			top: 5px;
+			position: relative;
+			display: inline-block;
+		}
+
+		/* Dropdown Content (Hidden by Default) */
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		}
+
+		/* Links inside the dropdown */
+		.dropdown-content a {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+	@media only screen and (max-width: 738px) {
+	.show {display:block;}
+	.nav-sec{display:none;}
+	.nav-log{display:none;}
+	.dropbtn {display:block;}
+	}
+	a{color: whitesmoke;}
+	
+	
+	
+	
+	
+	/* for mobiles */
+	
+		.title {
+			display: block;
+			font-size: 30vw;
+			font-family: "Changa";
+			color: rgb(17, 7, 70);
+			position: relative;
+			text-align: center;
+        }
+        .sub-title{
+			font-family: Cairo SemiBold;
+			color: rgb(0, 0, 0);
+			line-height: 1.55;
+			position: relative;
+			font-size: 2.8vw;
+			text-align: center;
+			-webkit-text-stroke: 0.2px #0c2fed;
+		}
+  
+        
+
+		
+
+        .action{
+            width: 100%;
+			max-width: 35vw;
+			display: flex;
+			margin: auto;
+			clear: both;
+			content: "";
+        }
+
+        .browse-btn{
+            background-color: #ffffff1a;
+			width: 48%;
+			height: 4vw;
+			max-height: 4vw;
+			min-width: 4vw;
+			margin: auto;
+			border-color: #673AB7;
+			border-width: 2px;
+			padding:0;
+        }
+
+        .register-btn{
+			background-color: #673AB7;
+			width: 48%;
+			height: 4vw;
+			margin: auto;
+			padding:0;
+        }
+		a{color: #989889;}
+		a:hover{color: black;}
+		.btn-txt{font-size:1vw;}
+	
+		/* for desktop */
+
+		
+
+			
+		
+@media only screen and (min-width: 768px) {
+	header{
+			position: fixed;
+			background-image: url({% static 'img/old-retro-antique-vintage-163182.jpeg' %});
+			width: 100%;
+			background-position-y: 30%;	
+			background-attachment: fixed;
+			min-height: 100%;
+			background-size: cover;
+			background-repeat: no-repeat
+	
+	}	
+
+		.title {
+			display: block;
+			transform: translate(-23vw,8.5vw) rotate(25.5deg);
+			background-blend-mode: overlay;
+			font-size: 6vw;
+			font-family: "Changa";
+			color: rgb(0, 0, 0);
+			position: relative;
+			text-align: center;
+			mix-blend-mode: overlay;
+        }
+        .sub-title{
+			font-family: Cairo SemiBold;
+			color: rgb(0, 0, 0);
+			mix-blend-mode: overlay;
+			transform: translate(-27.6vw,9vw) rotate(26deg);
+			position: relative;
+			font-size: 0.97vw;
+			text-align: center;
+			-webkit-text-stroke: 0.2px black;
+			line-height: 1.7;
+        }
+        
+
+		
+
+        .action{
+            width: 100%;
+			max-width: 35vw;
+			display: flex;
+			margin: 0;
+			transform:translate(0vw,9vw) rotate(26deg);
+			clear: both;
+			content: "";
+			mix-blend-mode: overlay;																																	
+        }
+
+        .browse-btn{
+            background-color: #ffffff1a;
+			width: 45%;
+			height: 4vw;
+			max-height: 4vw;
+			min-width: 4vw;
+			margin: auto;
+			border-color:#6e6d71;
+			border-width: 2px;
+			padding:0;
+        }
+
+        .register-btn{
+			background-color: #673AB7;
+			width: 45%;
+			height: 4vw;
+			margin: auto;
+			padding:0;
+        }
+		a{color: #989889;}
+		a:hover{color: black;}
+		.btn-txt{font-size:1vw;}
+
+      
+	
+	.footer{
+		margin: auto;
+		border-top: 3px solid cornsilk;
+		background-color: #eae8e2f7;
+		width: 100%;
+		height: auto;
+		padding: 25px;
+	}
+	
+	}
+
+    </style>
+
+{% endblock %}
+
+{% block content %}
+
+    <header>
+    <!-- <nav class="top-nav"> -->
+	<!-- <div class=" nav container"> -->
+		<!-- <div class="nav-title"> <h3> تجربتك </h3></div> -->
+		<!-- <div class="nav-sec"> -->
+			<!-- <ul> -->
+				<!-- <li>  <a href="{% url 'BlogPosts' %}"> المدونة </a>  </li> -->
+				<!-- <li> عن الموقع </li> -->
+				<!-- <li> تواصل معنا  </li> -->
+			<!-- </ul> -->
+		<!-- </div> -->
+		<!-- <div class="nav-log"> -->
+			<!-- <ul> -->
+
+				<!-- <li><a href="{% url 'account_signup' %}"> حساب جديد </a></li> -->
+				<!-- <li> <a href="{% url 'account_login' %}"> تسجيل الدخول </a> </li> -->
+            <!-- </ul> -->
+		<!-- </div> -->
+
+		<!-- <div class="dropdown"> -->
+			  <!-- <button onclick="myFunction()" class="dropbtn fa fa-navicon"></button> -->
+			  <!-- <span id="myDropdown" class="dropdown-content"> -->
+				<!-- <a href="#">المدونة</a> -->
+				<!-- <a href="#">عن الموقع</a> -->
+				<!-- <a href="#">تواصل معنا</a> -->
+				<!-- <a href="#">حساب جديد </a> -->
+				<!-- <a href="#">تسجيل الدخول</a> -->
+                <!-- </span> -->
+		<!-- </div> -->
+<!-- </div> -->
+<!-- </nav> -->
+<!-- <script> -->
+<!-- function myFunction() { -->
+    <!-- document.getElementById("myDropdown").classList.toggle("show"); -->
+<!-- } -->
+
+<!-- // Close the dropdown menu if the user clicks outside of it -->
+<!-- window.onclick = function(event) { -->
+  <!-- if (!event.target.matches('.dropbtn')) { -->
+
+    <!-- var dropdowns = document.getElementsByClassName("dropdown-content"); -->
+    <!-- var i; -->
+    <!-- for (i = 0; i < dropdowns.length; i++) { -->
+      <!-- var openDropdown = dropdowns[i]; -->
+      <!-- if (openDropdown.classList.contains('show')) { -->
+        <!-- openDropdown.classList.remove('show'); -->
+      <!-- } -->
+    <!-- } -->
+  <!-- } -->
+<!-- } -->
+<!-- </script> -->
+	<div class="">
+			<h1 class="title">تجربتك</h1>
+			<h4 class="sub-title"> 
+					اراهن يا صديقي بانك عشت في احد الايام<br> لحظة غيرت منحى حياتك
+					<br>
+					او اختبرت مشاعر لا تستطيع نسيانها
+					<br>
+					و اعطتك الحياة جزءا من اسرارها
+					<br>
+					فلما لا و ها قد سنحت لك الفرصة
+					<br>
+					ان تشارك تجربتك و تفيد غيرك
+					<br>
+					لربما تحدث تغيرا عجز الخبراء عن تحقيقه
+					<br>
+					   </h4>
+	</div>
+	
+	<div class="action">
+    <button class="btn browse-btn"><h6 class="btn-txt" style="color:black;font-family:changa;margin:0;"> <a style="color:black;" href="{% url 'BlogPosts' %}">تصفح التجارب المنشورة</a></h6></button>
+  
+</div>
+
+</header>
+
+{% endblock %}

@@ -1,0 +1,580 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'nice_select/css/nice-select.css' %}">
+    <style>
+        * {
+            direction: rtl;
+            text-align: right;
+            font-family: "Changa", "Din Pro"
+
+        }
+
+        body {
+            position: relative;
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        }
+
+        .action-bar {
+            background-color: transparent;
+        }
+
+        .Brand {
+            display: none;
+        }
+
+        .nav-Btn {
+            display: none;
+        }
+
+        .form-container {
+            position: relative;
+            padding: 3vw 0;
+            top: 3.5vh;
+            background-color: white;
+            box-shadow: 5px -5px 30px 1px #34090914;
+            border-radius: 5px;
+        }
+
+        .fa-bars:before {
+            color: grey;
+        }
+
+        .header {
+            padding: 0 3vw;
+            padding-bottom: 2vw;
+        }
+
+        .title {
+            text-align: center;
+            color: #000;
+            font-size: 2.5em;
+        }
+
+        .sub-title {
+            text-align: center;
+            color: #695656;
+            font-size: 1em;
+            max-width: 750px;
+            margin: auto;
+            padding: 0% 13.5vw;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        form {
+            opacity: 1;
+            display: block;
+            transform: rotate(0) scale(1) translateY(0);
+        }
+
+        @keyframes success {
+            0% {
+                opacity: 1;
+                display: block;
+                transform: rotate(0) scale(1) translateY(0);
+            }
+            99% {
+                transform: rotate(180deg) scale(0.3) translateY(90%);
+                opacity: 0;
+                display: block;
+            }
+            100% {
+                transform: rotate(180deg) scale(0.3) translateY(90%);
+                opacity: 0;
+                display: none;
+            }
+        }
+
+        select {
+            display: none;
+        }
+
+        .DivIn {
+            position: relative;
+            padding: 2% 10%;
+            width: 70%;
+            margin: 0 auto;
+
+        }
+
+        .DivIn div input, .DivIn div textarea {
+            display: block;
+            margin: auto;
+            padding: 10px 20px;
+            outline: none;
+            box-shadow: none;
+            width: 100%;
+            border: none;
+            font-family: changa;
+            border-bottom: 1px solid #c4c4c4;
+            transition: ease-in-out 300ms;
+        }
+
+        textarea {
+            height: 12vh;
+        }
+
+        .wide {
+            padding: 5px 20px;
+            float: none;
+            font-size: 15px;
+            border: none;
+            font-family: changa;
+            border-bottom: 1px solid #c0c5c6;
+            cursor: pointer;
+            margin: auto;
+            display: block;
+            height: 50px;
+            border-radius: 0;
+        }
+
+        .option.selected {
+            font-weight: 200;
+        }
+
+        .list > .option {
+            font-size: smaller;
+            font-weight: normal;
+        }
+
+        .nice-select:after {
+            margin-top: unset;
+            right: unset;
+            left: 12px;
+        }
+
+        .label {
+            font-size: .8rem;
+            color: #908d8d;
+            font-weight: 400;
+            font-family: changa;
+            padding: 0 15px;
+        }
+
+        .BtnSend:focus, .BtnSend:active {
+            background-color: #28a745;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .BtnSend {
+            max-width: 120px;
+            min-width: 115px;
+            width: 80%;
+            position: relative;
+            display: block;
+            margin: auto;
+            background-image: radial-gradient(circle 248px at center, #35c155 0%, #28a745 47%);
+        }
+
+        .BtnSend h6 {
+            text-align: center;
+            color: white;
+        }
+
+        .InputErr {
+            border-color: #E91E63 !important;
+        }
+
+        h5.ErrorTxt {
+            font-size: .8rem;
+        }
+
+        .ErrTxt {
+            position: relative;
+            margin: 0px 6px;
+            padding: 10px 0px;
+            display: block;
+            font-size: smaller;
+            font-weight: 500;
+            color: firebrick;
+        }
+
+        .success {
+            opacity: 0;
+            position: relative;
+            margin: 0 auto;
+            top: -50vh;
+            height: 35vh;
+            width: 50vw;
+            background-color: rebeccapurple;
+            box-shadow: none;
+            align-items: center;
+            display: none;
+            justify-content: center;
+            transition: linear 1s;
+
+        }
+
+        .success-msg {
+            color: white;
+            opacity: 0;
+            padding: 0vw 8vw 7vw 8vw;
+            line-height: 1.5;
+            text-align: center;
+            margin: auto;
+            max-width: 750px;
+            font-size: 1.2em;
+            font-weight: 500;
+            transition: linear .3s;
+        }
+
+        @-webkit-keyframes scaleAnimation {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale(1.5);
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+        }
+
+        @keyframes scalesuccessAnimationResultAnimation {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale(1.5);
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+        }
+
+        @-webkit-keyframes drawCircle {
+            0% {
+                stroke-dashoffset: 151px;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes drawCircle {
+            0% {
+                stroke-dashoffset: 151px;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @-webkit-keyframes drawCheck {
+            0% {
+                stroke-dashoffset: 36px;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes drawCheck {
+            0% {
+                stroke-dashoffset: 36px;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @-webkit-keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #successAnimationCircle {
+            stroke-dasharray: 151px 151px;
+            stroke: #fff;
+        }
+
+        #successAnimationCheck {
+            stroke-dasharray: 36px 36px;
+            stroke: #fff;
+        }
+
+        #successAnimationResult {
+            fill: #fff;
+            opacity: 0;
+        }
+
+        #successAnimation.animated {
+            -webkit-animation: 1s ease-out 0s 1 both scaleAnimation;
+            animation: 1s ease-out 0s 1 both scaleAnimation;
+            display: none;
+            position: relative;
+            margin: auto;
+            margin-top: 10%;
+            opacity: 0;
+        }
+
+        #successAnimation.animated #successAnimationCircle {
+            -webkit-animation: 1s cubic-bezier(0.77, 0, 0.175, 1) 0s 1 both drawCircle, 0.3s linear 0.9s 1 both fadeOut;
+            animation: 1s cubic-bezier(0.77, 0, 0.175, 1) 0s 1 both drawCircle, 0.3s linear 0.9s 1 both fadeOut;
+        }
+
+        #successAnimation.animated #successAnimationCheck {
+            -webkit-animation: 1s cubic-bezier(0.77, 0, 0.175, 1) 0s 1 both drawCheck, 0.3s linear 0.9s 1 both fadeOut;
+            animation: 1s cubic-bezier(0.77, 0, 0.175, 1) 0s 1 both drawCheck, 0.3s linear 0.9s 1 both fadeOut;
+        }
+
+        #successAnimation.animated #successAnimationResult {
+            -webkit-animation: 0.3s linear 0.9s both fadeIn;
+            animation: 0.3s linear 0.9s both fadeIn;
+        }
+
+        @media screen and (max-width: 768px) {
+            .success-msg {
+                font-size: 1em;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .form-container {
+                top: 0;
+                padding: 5vh;
+            }
+
+            .title {
+                font-size: 2em;
+            }
+
+            .sub-title {
+                font-size: .8em;
+            }
+
+            .DivIn {
+                padding: 4% 10%;
+            }
+
+            .success {
+                top: -50vh;
+                height: 30vw;
+                width: 50vw;
+            }
+
+            .success-msg {
+                font-size: .6em;
+            }
+
+            #successAnimation.animated {
+                height: 50px;
+            }
+        }
+
+        @media screen and (max-width: 425px) {
+
+            .DivIn {
+                width: 100%;
+            }
+
+            .success {
+                width: 80vw;
+            }
+        }
+
+        footer {
+            background-color: rgba(4, 2, 2, 0.86);
+            position: relative;
+            height: 10vh;
+            top: -3vh;
+            display: block;
+            margin: 5% 0px 0 0;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container form-container">
+        <div class="header">
+            <h2 class="title">تواصل معنا</h2>
+            <h4 class="sub-title">
+                <br>ان كان لديك اي استفسار، طلب او اي مشكل
+                قسم الدعم الفني سيكون مسرورا بخدمتكم
+                و سنحرص على الرد في اقرب الاوقات</h4>
+        </div>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            {% for field in Form %}
+                <div class="DivIn">
+                    <span class="label">{{ field.label }}</span>
+                    <div>
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button class="btn BtnSend" type="button"><h6>ارسال</h6></button>
+        </form>
+    </div>
+    <div class="success">
+        <div class="container success-container">
+            <svg id="successAnimation" class="animated" xmlns="http://www.w3.org/2000/svg" width="70" height="70"
+                 viewBox="0 0 70 70">
+                <path id="successAnimationResult" fill="#D8D8D8"
+                      d="M35,60 C21.1928813,60 10,48.8071187 10,35 C10,21.1928813 21.1928813,10 35,10 C48.8071187,10 60,21.1928813 60,35 C60,48.8071187 48.8071187,60 35,60 Z M23.6332378,33.2260427 L22.3667622,34.7739573 L34.1433655,44.40936 L47.776114,27.6305926 L46.223886,26.3694074 L33.8566345,41.59064 L23.6332378,33.2260427 Z"/>
+                <circle id="successAnimationCircle" cx="35" cy="35" r="24" stroke="#979797" stroke-width="2"
+                        stroke-linecap="round" fill="transparent"/>
+                <polyline id="successAnimationCheck" stroke="#979797" stroke-width="2" points="23 34 34 43 47 27"
+                          fill="transparent"/>
+            </svg>
+            <h5 class="success-msg">
+                لقد تم استقبال رسالتكم بنجاح
+                <br>نشكركم على هذا الوقت القيم
+                <br>سوف ترد عليكم في اقرب وقت
+            </h5>
+        </div>
+    </div>
+
+    {#    {% include 'snippet/footer.html' %}#}
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(methode) {
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(methode));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+    </script>
+    <script src="{% static 'nice_select/js/jquery.nice-select.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('select:not(.ignore)').niceSelect();
+        });
+    </script>
+    <script>
+        var textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', function () {
+            textarea.style.height = '12vh';
+            textarea.style.overflow = 'hidden';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        });
+
+    </script>
+
+    <script>
+        $('.BtnSend').on('click', function (e) {
+            e.preventDefault();
+            Data = $('form').serialize();
+            $.ajax({
+                type: "POST",
+                url: '{% url 'Contact' %}',
+                dataType: 'json',
+                data: Data,
+                success: Send,
+                error: Raise,
+            });
+
+            function Send(xhr) {
+                $('form').css('-webkit-animation', 'success .8s ease-out forwards')
+                setTimeout(function () {
+                    $('.success').css('display', 'flex');
+                }, 800)
+                setTimeout(function () {
+                    $('.success').css('opacity', 1);
+                }, 1000)
+
+                setTimeout(function () {
+                    $('#successAnimation.animated').css('display', 'block');
+                    $('.success-msg').css('opacity', 1);
+                }, 1500)
+                setTimeout(function () {
+                    window.location = '{% url 'BlogPosts' %}';
+                }, 3000)
+
+
+            }
+
+            function Raise(data) {
+                id = {
+                    email: 'id_email',
+                    subject: 'id_subject'
+                };
+                for (i in id) {
+                    $input = $('#' + id[i]);
+                    if ($input.next('p').length) {
+                        if (document.getElementById(id[i]).classList[1]) {
+                            $input.removeClass("InputErr");
+                        }
+                        $input.next('p').remove();
+                    }
+                }
+                for (var key in data.responseJSON["errors"]) {
+                    var name = key;
+                    var $input = $("#id_" + key);
+                    if ($input.next('p').length) {
+                        $input.next('p').remove();
+
+                    }
+                    document.getElementById("id_" + key).classList.add('InputErr');
+                    $input.after("<p class='ErrTxt'>" + data.responseJSON["errors"][key][0] + "</p>");
+                }
+                ;
+            }
+        })
+
+
+    </script>
+{% endblock %}

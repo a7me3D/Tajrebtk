@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>
+        {% block title %}
+            {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+            {% with self.get_site.site_name as site_name %}
+                {% if site_name %} {{ site_name }}{% endif %}
+            {% endwith %}
+        {% endblock %}
+    </title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {# Global stylesheets #}
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0\css\bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Changa" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'FontAwesome/font-awesome-all.css' %}">
+    <link rel="stylesheet" href="{% static 'FontAwesome/use-fontawesome-all.css' %}">
+    {% block extra_css %}{% endblock %}
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% include 'snippet/navbar.html' %}
+{% block content %}
+{% endblock %}
+{% include 'snippet/footer.html' %}
+{# Global javascript #}
+<script type="text/javascript" src="{% static 'bootstrap-3.3.7-dist\js\bootstrap.min.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
