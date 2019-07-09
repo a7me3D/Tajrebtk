@@ -1,0 +1,101 @@
+.fr-wrapper {
+    font-size: 18px;
+    font-family: "Changa", "Din Pro";
+}
+
+.fr-toolbar .fr-top {
+    text-align: center;
+
+}
+
+.fr-toolbar.fr-rtl .fr-command.fr-btn, .fr-popup.fr-rtl .fr-command.fr-btn {
+    float: none;
+
+}
+
+.royal-theme.fr-toolbar .fr-command.fr-btn {
+    margin: 0 1vw;
+
+}
+
+.royal-theme.fr-box.fr-basic.fr-top .fr-wrapper {
+    box-shadow: 0px 0px 0px #0000003d;
+    background: none;
+}
+
+.fr-toolbar.royal-theme.fr-rtl.fr-desktop.fr-top.fr-basic.fr-sticky-off {
+    border: 0px;
+    text-align: center;
+}
+
+.fr-toolbar.royal-theme.fr-rtl.fr-desktop.fr-top.fr-basic.fr-sticky-on {
+    background-color: steelblue;
+    padding: 2px 0;
+    border: 0;
+    transition: ease-in-out background-color 300ms;
+}
+
+.royal-theme.fr-toolbar, .fr-sticky-off {
+    background: transparent;
+    border: 0px;
+}
+
+.royal-theme.fr-toolbar {
+    background-color: #24004b;
+    text-align: center;
+    border: 0;
+    transition: ease-in-out background-color 300ms;
+}
+
+.fr-toolbar .fr-command.fr-btn, .fr-popup .fr-command.fr-btn {
+    color: white !important;
+}
+
+.royal-theme.fr-popup .fr-command.fr-btn i{
+    color: #4b0082;
+
+}
+.royal-theme.fr-toolbar .fr-command.fr-btn.fr-active, .royal-theme.fr-popup .fr-command.fr-btn.fr-active {
+    background-color: #dfd8d8;
+}
+
+.royal-theme.fr-toolbar .fr-command.fr-btn.fr-dropdown.fr-active, .royal-theme.fr-popup .fr-command.fr-btn.fr-dropdown.fr-active {
+    background: #282828 !important;
+    color: #ffffff !important;
+}
+
+.royal-theme.fr-desktop .fr-command:hover, .royal-theme.fr-desktop .fr-command:focus {
+    background-color: #a9acdb;
+}
+
+.fr-wrapper.show-placeholder {
+    background-color: hsla(0, 2%, 28%, 0.84);
+    color: #aaa;
+}
+
+.royal-theme.fr-toolbar .fr-command.fr-btn.fr-dropdown::after, .royal-theme.fr-popup .fr-command.fr-btn.fr-dropdown::after {
+    border-top-color: #ffffff;
+}
+
+.royal-theme.fr-box.fr-basic .fr-element {
+    color: black;
+    min-height: 450px;
+    background-image: -webkit-linear-gradient(180deg, rgb(228, 227, 227) 60%, rgb(251, 251, 251) 95%);
+}
+
+.royal-theme.fr-popup .fr-color-hex-layer .fr-input-line{
+        padding: 10px 20px 0 20px;
+}
+
+.royal-theme.fr-popup.fr-rtl .fr-input-line input + label, .royal-theme.fr-popup.fr-rtl .fr-input-line textarea + label {
+    opacity:0
+}
+
+.royal-theme.fr-popup .fr-input-line input[type="text"], .royal-theme.fr-popup .fr-input-line textarea {
+    margin: -5px 0 1px 0;
+}
+
+.royal-theme.fr-popup .fr-action-buttons button.fr-command {
+    color: white;
+}
+

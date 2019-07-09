@@ -1,0 +1,169 @@
+body, html {
+    min-height: 50rem;
+    max-height: 90rem;
+}
+
+* {
+    font-family: "Changa", "Din Pro";
+    direction: rtl;
+    text-align: right;
+}
+
+.UserProfileUpdate {
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
+.writer-btn {
+    display: none;
+}
+
+.action-bar {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.Brand {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0;
+    margin: 0;
+    margin-left: 30%;
+    left: 5%;
+}
+
+.profile-card {
+    background-color: #1b1e218c;
+    border: 1px solid white;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, .5);
+    position: relative;
+    top: 20vh;
+    height: auto;
+    width: 60vw;
+    margin: auto;
+    padding: 1.5% 0;
+}
+
+.profile-card .container {
+    position: relative;
+    margin-top: -10%;
+}
+
+#avatar_input {
+    position: relative;
+    display: block;
+    margin: auto;
+    text-align: center;
+    z-index: 1;
+    color: #ffffff;
+    font-size: 55px;
+    background-color: rgba(0, 0, 0, 0.21);
+    cursor: pointer;
+    border-radius: 50%;
+    padding-top: 20px;
+    height: 100px;
+    width: 100px;
+}
+
+.user-avatar {
+    display: block;
+    margin: auto;
+    top: -100px;
+    position: relative;
+    border-radius: 55%;
+    border: 6px solid rgba(255, 255, 255, 0.78);
+    background-color: rgba(224, 216, 216, 0.8);
+    opacity: 0.7;
+}
+
+.fa-upload:before {
+    font-size: 3rem;
+}
+
+.save-changes {
+    position: relative;
+    min-width: 115px;
+    max-width: 130px;
+    width: 80%;
+    display: block;
+    margin: auto;
+    border: none;
+    background-color: #dc143a;
+    color: white;
+}
+
+.save-changes:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.DivIn {
+    padding: 2% 10%;
+}
+
+.label, label {
+    font-size: .8rem;
+    color: #908d8d;
+    font-weight: 400;
+    direction: rtl;
+    font-family: changa;
+    padding: 0 15px;
+}
+
+.DivIn input, .DivIn textarea {
+    display: block;
+    width: 35vw;
+    padding: 1.5%;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ffffff;
+    background-color: transparent;
+    background-clip: padding-box;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin: 0 auto;
+}
+
+.DivIn input:focus, .DivIn textarea:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid #3e3839;
+}
+
+.errorlist li {
+    color: #e4e4e4;
+    opacity: 0.5;
+    font-size: 0.8rem;
+    padding-top: 10px;
+}
+
+#id_userprofile-0-avatar {
+    visibility: hidden;
+    display: none;
+}
+
+label:first-child {
+    display: none;
+}
+
+h1.pass-change-link {
+    font-size: 0.8em;
+    padding: 5% 15%;
+    color: #f7d658;
+    font-weight: 400;
+}
+
+
+
+@media screen and (max-width: 575px) {
+    .profile-card {
+        width: 90vw;
+    }
+
+    .DivIn input, .DivIn textarea {
+        width: 90%;
+    }
+
+}

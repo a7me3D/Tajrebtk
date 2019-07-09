@@ -1,0 +1,473 @@
+* {
+    font-family: "changa";
+    font-weight: initial;
+    direction: rtl;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-origin: padding-box;
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
+ul {
+    list-style: none;
+}
+
+input {
+    background-color: transparent;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+.card {
+    position: absolute;
+    width: 35%;
+    min-width: auto;
+    right: 35%;
+    top: 13%;
+    margin-top: 2vw;
+    background-color: white;
+    box-shadow: -11px 0px 22px -6px #0000002b;
+    transition: ease-out 300ms;
+
+}
+
+.LoginHeader, .SignupHeader {
+    padding: 3% 0;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #e84242;;
+    font-family: 'khalaad al-arabeh';
+}
+
+hr {
+    width: 80%;
+    margin: auto;
+    margin-top: -1%;
+    margin-bottom: 5%;
+    border: 0.5px solid #e6d9d9;
+}
+
+.socialconnect > h5, .normalconnect > h5 {
+    text-align: center;
+    font-size: 10px;
+    color: #616161;
+}
+
+.socialconnect > ul > li > .btn {
+    display: block;
+    margin: 5px auto;
+    min-width: 180px;
+    max-width: 200px;
+    width: 80%;
+}
+
+.socialconnect > ul > li > .btn > h6 {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.google-btn > h6:before {
+    content: "\f1a0";
+    font-family: "Font Awesome 5 Brands";
+    margin: 0 2px;
+}
+
+.fb-btn > h6:before {
+    content: " \f09a";
+    font-family: "Font Awesome 5 Brands";
+    margin: 0 2px;
+}
+
+.fb-btn, .fb-btn:active, .fb-btn:focus {
+    background: -moz-linear-gradient(0% 50% 0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+    background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0, rgba(21, 140, 255, 1)), color-stop(1, rgba(0, 40, 145, 1)));
+    background: -o-linear-gradient(0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+    background: -ms-linear-gradient(0deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#158CFF', endColorstr='#002891' ,GradientType=0)";
+    background: linear-gradient(90deg, rgba(21, 140, 255, 1) 0%, rgba(0, 40, 145, 1) 100%);
+    background-color: rgba(21, 140, 255, 1);
+    opacity: 0.8;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    filter: alpha(opacity=80) progid:DXImageTransform.Microsoft.Alpha(opacity=80) progid:DXImageTransform.Microsoft.gradient(startColorstr='#158CFF', endColorstr='#002891', GradientType=1);
+    outline: none;
+    box-shadow: none;
+}
+
+.google-btn, .google-btn:active, .google-btn:focus {
+    background: -moz-linear-gradient(0% 50% 0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+    background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0, rgba(255, 42, 0, 1)), color-stop(1, rgba(255, 109, 6, 1)));
+    background: -o-linear-gradient(0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+    background: -ms-linear-gradient(0deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF2A00', endColorstr='#FF6D06' ,GradientType=0)";
+    background: linear-gradient(90deg, rgba(255, 42, 0, 1) 0%, rgba(255, 109, 6, 1) 100%);
+    background-color: rgba(255, 42, 0, 1);
+    opacity: 0.8;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    filter: alpha(opacity=80) progid:DXImageTransform.Microsoft.Alpha(opacity=80) progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF2A00', endColorstr='#FF6D06', GradientType=1);
+    outline: none;
+    box-shadow: none;
+}
+
+.DivIn {
+    padding: 2.5% 2%;
+}
+
+.card > .login-card > .login > .normalconnect .DivIn > input {
+    position: relative;
+    right: 25%;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666666;
+    display: block;
+    width: 55%;
+    height: 50px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #e6e6e6;
+    padding: 0 30px 0 68px;
+    transition: ease 300ms;
+}
+
+input::placeholder {
+    font-size: small;
+    opacity: 1;
+}
+
+#id_remember, #signup_form > .DivIn > #id_rules {
+    width: initial;
+    height: 30px;
+}
+
+.DivIn > h6 {
+    position: relative;
+    font-size: 0.8rem;
+    text-align: right;
+    margin: -35px 30% 15px 4px;
+    padding-top: 10px;
+}
+
+.login-submit, .login-submit:active, .login-submit:hover, .login-submit:focus {
+    color: white;
+    background: linear-gradient(90deg, rgb(8, 200, 93) 0%, rgb(99, 195, 87) 100%);
+    background-color: rgb(8, 200, 90);
+    border: none;
+    box-shadow: none;
+    display: block;
+    position: relative;
+    margin: auto;
+    min-width: 160px;
+    max-width: 200px;
+    width: 80%;
+}
+
+.signup-display, .signup-display:active, .signup-display:focus {
+    position: relative;
+    margin: auto;
+    display: block;
+    border: 1px solid #0000003d;
+    background-color: white;
+    color: #212529;
+    box-shadow: none;
+    min-width: 100px;
+    max-width: 200px;
+    width: 80%;
+
+}
+
+.signup-submit, .signup-submit:active, .signup-submit:hover, .signup-submit:active, .signup-submit:focus {
+    background: linear-gradient(90deg, rgb(8, 200, 93) 0%, rgb(99, 195, 87) 100%);
+    background-color: rgb(8, 200, 90);
+    display: block;
+    position: relative;
+    margin: auto;
+    top: 15px;
+    color: white;
+    box-shadow: none;
+    min-width: 100px;
+    max-width: 200px;
+    width: 90%;
+
+}
+
+.login-submit-div {
+    margin-bottom: 1%;
+    float: right
+}
+
+.login-submit-div, .signup-display-div {
+    top: 15px
+}
+
+.pass-reset {
+    color: black;
+    text-align: center;
+    margin: auto;
+    position: relative;
+    display: block;
+    font-size: smaller;
+    font-weight: 200;
+}
+
+#signup_form > .DivIn > .InputErr {
+    border-bottom: 1px solid;
+    border-color: #E91E63;
+    height: 40px;
+}
+
+#signup_form > .DivIn > input {
+    position: relative;
+    right: 20%;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666666;
+    display: block;
+    width: 55%;
+    height: 50px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #e6e6e6;
+    padding: 0 30px 0 68px;
+}
+
+#signup_form > .DivIn > .row > .col-md-4 > .InputErr {
+    border-bottom: 1px solid;
+    border-color: #E91E63;
+    height: 40px;
+}
+
+#signup_form > .DivIn > .row > .col-md-4 {
+    left: -15%;
+}
+
+#signup_form > .DivIn > .row > .col-md-4 > .ErrTxt {
+    position: relative;
+    margin: auto;
+    margin-top: 10px;
+    display: block;
+    font-size: smaller;
+    font-weight: 500;
+    color: firebrick;
+    text-align: right;
+}
+
+#signup_form > .DivIn > .checkbox-label + .ErrTxt {
+    margin: 26px 15px -26px 60px;
+}
+
+#signup_form > .DivIn > .row > .col-md-4 > input {
+    position: relative;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666666;
+    display: block;
+    width: 100%;
+    height: 50px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #e6e6e6;
+}
+
+h4 {
+    line-height: normal;
+    text-align: center;
+    font-size: inherit;
+    font-weight: 700;
+}
+
+.checkbox {
+    float: right;
+
+}
+
+.checkbox-label {
+    right: 3%;
+    position: relative;
+    top: 3px;
+    float: right;
+}
+
+.checkbox-label > h6 {
+    font-size: .8rem !important;
+}
+
+.card > .login-card > .login > .normalconnect .DivIn > .InputErr {
+    border-bottom: 1px solid;
+    border-color: #E91E63;
+    height: 40px;
+}
+
+.ErrTxt {
+    position: relative;
+    margin: 2% 20% 0 0;
+    font-size: smaller;
+    font-weight: 500;
+    color: firebrick;
+    text-align: right;
+}
+
+@media screen and (max-width: 991px) {
+
+    body {
+        direction: ltr
+    }
+
+    .col-md-6 {
+        margin: auto;
+        display: block;
+        position: relative;
+        width: 62%;
+    }
+
+    .card {
+        width: 83%;
+        right: 8%;
+        top: 20%;
+    }
+
+    .DivIn {
+        padding: 1% 2%;
+    }
+
+    #signup_form > .DivIn > .row > .col-md-4 {
+        right: 20%;
+        padding: 1% 2%;
+    }
+
+    #signup_form > .DivIn > .row > .col-md-4 > input {
+        font-size: 15px;
+        line-height: 1.5;
+        color: #666666;
+        display: block;
+        width: 55%;
+        height: 50px;
+        outline: none;
+        border: none;
+        border-bottom: 2px solid #e6e6e6;
+        padding: 0 30px 0 68px;
+    }
+}
+
+@media screen and (max-width: 880px) {
+
+    body {
+        direction: ltr
+    }
+
+    .card {
+        width: 83%;
+        right: 8%;
+        top: 20%;
+    }
+
+    .card > .login-card > .login > .normalconnect .DivIn > input {
+        padding: 0;
+    }
+
+    .login-submit-div {
+        margin-bottom: 1%;
+        float: initial;
+    }
+
+}
+
+@media screen and  (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 425px) {
+    .login-submit, .signup-display {
+        min-width: 150px;
+        width: 20%;
+    }
+
+    body {
+        direction: ltr;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    .card {
+        width: 83%;
+        right: 8%;
+        top: 15%;
+    }
+
+    .LoginHeader {
+        font-size: 1.5rem
+    }
+
+    .DivIn {
+        padding: 0;
+    }
+
+    .signup-submit, .signup-submit:active, .signup-submit:hover, .signup-submit:active {
+        top: 20px;
+    }
+
+    #signup_form > .DivIn > input {
+        padding: 0;
+    }
+
+    #signup_form > .DivIn > .row > .col-md-4 > input {
+        padding: 0;
+    }
+
+    .checkbox {
+        left: 0;
+    }
+
+    .checkbox > input {
+        width: 30%;
+        right: 10px;
+    }
+
+    .checkbox-label {
+        right: 25%;
+    }
+
+    .checkbox-label > h6 {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .login-submit, .signup-display {
+        min-width: 120px;
+        width: 20%;
+        height: 30px;
+        line-height: 1.1;
+        font-size: 0.8rem;
+    }
+
+    .DivIn > h6 {
+        margin: -32px 33% 15px 4px;
+    }
+}
+
+footer {
+    background-color: #e9ecef;
+    bottom: -20vh;
+    margin: 0;
+}
+
+.legacy {
+    color: #818182;
+}
