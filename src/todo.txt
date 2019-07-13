@@ -1,0 +1,5 @@
+1-add comments 
+2-fix length title > max length in writer mode (js probleme )
+3-fix posts small widget title (padding bot) in blog/ 
+4-transform to class based views
+5-activate social login
