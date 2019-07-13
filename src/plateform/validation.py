@@ -2,8 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import string
-from urllib import quote_plus
-
+from urllib.parse import quote_plus 
 from django.core.validators import ValidationError, URLValidator
 from jinja2.filters import do_striptags, do_wordcount
 from jinja2.utils import escape

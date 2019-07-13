@@ -25,9 +25,9 @@
         </div>
     {% endif %}
 
-    <div class=" mainbox animated slideInUp delay-2s">
+    <div class=" mainbox animated slideInUp">
         <div class="container">
-            <header class="header animated zoomIn delay-2s">
+            <header class="header animated zoomIn">
                 <ul class="list-detail">
                     <li class="detail"><i class="fa fa-thumbs-up"></i> اعجاب : {{ post_slug.hits }} </li>
                     <li class="detail"><i class="fas fa-tags"></i> تصنيف : {{ post_slug.tags }}</li>
@@ -54,7 +54,12 @@
                         </a>
                     </li>
                     <li>
+                    {% if liked%}
+                        <i class="thumb fas fa-thumbs-up"></i>
+                    {% else %}
                         <i class="thumb far fa-thumbs-up"></i>
+                    {% endif %}
+
                     </li>
                 </ul>
             </section>
@@ -76,12 +81,12 @@
         <div class="comment-box container">
             {% load custom_comments_tags %}
             {% if user.is_authenticated %}
-                {% comment_form post_slug request.user %}
+            {% comment_form post_slug request.user %}
             {% endif %}
         </div>
         <div class="comment-list" style="margin-top: 15vh">
             {% get_comments post_slug request.user %}
-
+        {% comment %}{% endcomment %}
 
         </div>
     </div>
@@ -159,6 +164,7 @@
             function LikePost(data, jqXHR) {
                 {% if user.is_authenticated %}
                     var data = $.parseJSON(data)
+                    console.log(data)
                     if (data['liked']) {
                         $('.thumb').removeClass("fas fa-thumbs-up").addClass('far fa-thumbs-up')
                     }

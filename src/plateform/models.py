@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import datetime
 import string
-import urllib
+from urllib.parse import quote_plus
 import jinja2.utils
 from django.contrib.auth.admin import User
 from django.db import models
@@ -54,7 +54,7 @@ class BlogPost(models.Model):
         safe = string.punctuation
         for i in text:
             if i in safe:
-                text = text.replace(i, jinja2.utils.escape(urllib.quote_plus(i)))
+                text = text.replace(i, jinja2.utils.escape(quote_plus(i)))
         text = text.replace(' ', '_')
         return text
     # todo :if len(desc)= 0 trancate desc from body
@@ -87,6 +87,7 @@ class BlogPost(models.Model):
                 # add blog title to image path
                 try:
                     im.save(fullpath.rsplit('\\', 1)[0] + '\\thumb_cover\\' + fname + '_' + randomstr + '_thumb.png')
+                    print("thumbnail saved")
                 except:
                     im.save(fullpath.rsplit('/', 1)[0] + '\\thumb_cover\\' + fname + '_' + randomstr + '_thumb.png')
 

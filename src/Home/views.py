@@ -29,7 +29,6 @@ def Contact(request):
             data = {
                 'errors':Form.errors
             }
-            print Form.errors
             return JsonResponse(data,status=400)
 
     args = {

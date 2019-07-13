@@ -55,18 +55,20 @@
             <form class="login" id="login_form" method="POST" action="{% url 'account_login' %}">
                 {% csrf_token %}
                 <div class="socialconnect">
-                    {% load socialaccount %}
-                    {% providers_media_js %}
+                    {% comment %} {% load socialaccount %}
+                    {% providers_media_js %} {% endcomment %}
 
                     <h5>عبر مواقع التواصل</h5>
                     <ul>
                         <li>
-                            <a class="btn fb-btn" href="{% provider_login_url "facebook" method="js_sdk" %}">
+                            <a class="btn fb-btn" href="">
+                            {% comment %} <a class="btn fb-btn" href="{% provider_login_url "facebook" method="js_sdk" %}"> {% endcomment %}
                                 <h6>acebook</h6>
                             </a>
                         </li>
                         <li>
-                            <a  href="{% provider_login_url "google" method="js_sdk" %}" class="btn google-btn"><h6>oogle</h6></a>
+                            {% comment %} <a  href="{% provider_login_url "google" method="js_sdk" %}" class="btn google-btn"><h6>oogle</h6></a> {% endcomment %}
+                            <a  href="" class="btn google-btn"><h6>oogle</h6></a>
                         </li>
                     </ul>
                 </div>

@@ -5,13 +5,17 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0#%t5=i#n_#yd!l!#8c6z*#19$u2(*fqhj$f5oaj_@8pzx!f@t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['https://tajrebtk.herokuapp.com/',
+                 'tajrebtk.com',
+                 'tajrebtk.herokuapp.com',
+                 '.tajrebtk.herokuapp.com',
+                 ]
 
 # Application definition
 
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     'el_pagination',
     'comments',
     'django_extensions',
+	'storages',
 
     # social providers
     'allauth.socialaccount.providers.facebook',
@@ -58,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 
@@ -106,6 +112,7 @@ DATABASES = {
     }
 }
 
+
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -144,6 +151,7 @@ USE_X_FORWARDED_HOST = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -153,8 +161,17 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+#DropBox
+#import dropbox
+#DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+#DROPBOX_OAUTH2_TOKEN = 'FLpjvX1zERAAAAAAAAAAFaNHrAgSsYkA44uHYYQcaGLi2u03DE-TI-LZyXEwyPd8'
+#DROPBOX_ROOT_PATH = 'media'
+
+
 
 # crispy conf
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -163,7 +180,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 SITE_ID = 4
 ACCOUNT_SIGNUP_FORM_CLASS = 'Profiles.forms.SignupForm'
-SOCIALACCOUNT_FORMS = {'signup': 'Profiles.forms.SignupForm'}
+OCIALACCOUNT_FORMS = {'signup': 'Profiles.forms.SignupForm'}
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_LOGOUT_ON_GET = True
 
@@ -213,7 +230,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
 # pagination
 EL_PAGINATION_PER_PAGE = 12
@@ -223,3 +240,15 @@ FROALA_INCLUDE_JQUERY = False
 FROALA_EDITOR_PLUGINS = ('char_counter', 'colors', 'draggable', 'emoticons',
                          'font_size', 'fullscreen', 'image', 'link', 'lists', 'quote', 'url',)
 FROALA_EDITOR_OPTIONS = {'language': 'ar'}
+
+# Let's Encrypt ssl/tls https
+
+CORS_REPLACE_HTTPS_REFERER = True
+HOST_SCHEME = "https://"
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 1000000
+SECURE_FRAME_DENY = True

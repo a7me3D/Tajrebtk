@@ -9,8 +9,9 @@ Scripts/
 mediafiles/
 tcl/
 
+.vscode/
 
-
+src/Tajrebtk/settings/production.py
 
 SSL_Test.crt
 SSL_Test.key

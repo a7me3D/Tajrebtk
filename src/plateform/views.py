@@ -65,18 +65,22 @@ from django.contrib.auth.models import User
 from random import sample
 
 def _related(tag):
-    all = posts.objects.filter(tags__name=tag)
-    related = sample(posts.objects.filter(tags__name=tag), 3)
+    related_posts = list(posts.objects.filter(tags__name=tag))
+
+    related = sample(related_posts, min(max(0,len(related_posts)),3))
     return related
 
 
 def BlogPost(request, slug=None):
     post_slug = get_object_or_404(posts, slug=slug)
+    user = request.user
+    _liked = user in post_slug.liked.all()
     author_avatar = Author.objects.get(user=User.objects.get(username=post_slug.author).id)
     args = {
         'post_slug': post_slug,
         'author_avatar': author_avatar,
         'related': _related(post_slug.tags),
+        'liked':_liked,
     }
 
     # request.META['HTTP_X_FORWARDED_FOR']
@@ -146,6 +150,7 @@ def Editor(request):
                     data = {
                         'errors': post_form.errors
                     }
+                    print(data)
                     return JsonResponse(data, status=400)
         else:
             post_form = PostForm()

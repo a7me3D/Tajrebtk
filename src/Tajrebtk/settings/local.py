@@ -5,7 +5,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0#%t5=i#n_#yd!l!#8c6z*#19$u2(*fqhj$f5oaj_@8pzx!f@t'
+SECRET_KEY = "Test123"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'django_extensions',
 
     # social providers
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
 
 ]
 
@@ -167,57 +167,26 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 SITE_ID = 4
 ACCOUNT_SIGNUP_FORM_CLASS = 'Profiles.forms.SignupForm'
-OCIALACCOUNT_FORMS = {'signup': 'Profiles.forms.SignupForm'}
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# SOCIALACCOUNT_FORMS = {'signup': 'Profiles.forms.SignupForm'}
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_LOGOUT_ON_GET = True
 
 LOGIN_REDIRECT_URL = '/blog'
 LOGIN_URL = '/portal'
 
-SOCIALACCOUNT_QUERY_EMAIL = True
+# SOCIALACCOUNT_QUERY_EMAIL = True
 
-SOCIALACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_EMAIL_REQUIRED = True
+# SOCIALACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_USERNAME_VALIDATORS = 'Profiles.validators.UsernameValidators'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'METHOD': 'oauth2',
-        'SCOPE': ['email', 'public_profile', 'user_friends'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time',
-        ],
-        'EXCHANGE_TOKEN': True,
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v2.12',
-    },
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
 
-# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+SOCIALACCOUNT_PROVIDERS = {}
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 # pagination
 EL_PAGINATION_PER_PAGE = 12
@@ -227,3 +196,16 @@ FROALA_INCLUDE_JQUERY = False
 FROALA_EDITOR_PLUGINS = ('char_counter', 'colors', 'draggable', 'emoticons',
                          'font_size', 'fullscreen', 'image', 'link', 'lists', 'quote', 'url',)
 FROALA_EDITOR_OPTIONS = {'language': 'ar'}
+
+
+CORS_REPLACE_HTTPS_REFERER = False
+HOST_SCHEME = "http://"
+SECURE_PROXY_SSL_HEADER = ()
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_SECONDS = 1000000
+SECURE_FRAME_DENY = False
+
+

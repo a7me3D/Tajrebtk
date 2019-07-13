@@ -5,9 +5,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-print PROJECT_DIR
-print BASE_DIR
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '0#%t5=i#n_#yd!l!#8c6z*#19$u2(*fqhj$f5oaj_@8pzx!f@t'
 

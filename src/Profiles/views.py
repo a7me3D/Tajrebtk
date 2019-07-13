@@ -76,8 +76,6 @@ def edit_profile(request):
                 created_user.save()
                 formset.save()
                 return HttpResponseRedirect('/accounts/u/' + user.username)
-            else:
-                print formset.errors
-
+                
         return render(request, "profile/user_update.html",
                       {"user_form": user_form, 'formset': list(formset[0]), 'management': formset.management_form})
