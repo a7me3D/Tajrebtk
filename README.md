@@ -4,7 +4,7 @@ This is not 100% for now
 Feel free to review and contribute :)
 
 After Cloning Run : 
- - Cd to src
+ - cd src
  - python manage.py migrate
  - python manage.py loaddata  initial_data.json
 
