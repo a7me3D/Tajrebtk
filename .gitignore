@@ -6,7 +6,7 @@ Tajrebtk/settings/local.py
 db.sqlite3
 .idea
 Scripts/
-mediafiles/
+
 tcl/
 
 .vscode/
