@@ -7,5 +7,10 @@ After Cloning Run :
  - cd src
  - python manage.py migrate
  - python manage.py loaddata  initial_data.json
+ 
+You can Login as superuser:
+ username : root
+ password : admin123
+Or you can run python manage.py createsuperuser to add new superuser account
 
 Note that the app is a function based view
